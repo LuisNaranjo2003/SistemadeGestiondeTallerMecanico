@@ -1,20 +1,22 @@
 <?php
-class Conexion {
-    private $host = "localhost";
-    private $db_name = "taller_mecanico";
-    private $username = "root";
-    private $password = "";
-    public $conn;
 
-    public function conectar() {
-        $this->conn = null;
-        try {
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $exception) {
-            echo "Error de conexión: " . $exception->getMessage();
+class Conexion {
+
+    public static function conectar()
+    {
+        $host = "localhost";
+        $bd = "taller_mecanico";
+        $usuario = "root";
+        $pass = "";
+
+        $conn = new mysqli($host, $usuario, $pass, $bd);
+
+        if ($conn->connect_error) {
+            die("Error de conexión: " . $conn->connect_error);
         }
-        return $this->conn;
+
+        $conn->set_charset("utf8");
+
+        return $conn;
     }
 }
-?>
