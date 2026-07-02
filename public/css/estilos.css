@@ -2,7 +2,7 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f3f6f9; /* Tono de fondo suave y limpio */
+    background-color: #f3f6f9; 
     color: #1e1e2d;
     margin: 0;
     padding: 40px 20px;
@@ -53,7 +53,7 @@ h1 {
 }
 
 .btn-agregar {
-    background-color: #009ef7; /* Azul moderno e intuitivo */
+    background-color: #009ef7; 
     color: #ffffff;
     text-decoration: none;
     padding: 12px 24px;
@@ -119,9 +119,9 @@ tbody tr:hover {
     display: inline-block;
 }
 
-.btn-ver { background-color: #50cd89; box-shadow: 0px 4px 10px rgba(80, 205, 137, 0.2); } /* Verde */
-.btn-editar { background-color: #f1416c; box-shadow: 0px 4px 10px rgba(241, 65, 108, 0.2); } /* Rosa */
-.btn-eliminar { background-color: #181c32; box-shadow: 0px 4px 10px rgba(24, 28, 50, 0.2); } /* Oscuro */
+.btn-ver { background-color: #50cd89; box-shadow: 0px 4px 10px rgba(80, 205, 137, 0.2); } 
+.btn-editar { background-color: #f1416c; box-shadow: 0px 4px 10px rgba(241, 65, 108, 0.2); } 
+.btn-eliminar { background-color: #181c32; box-shadow: 0px 4px 10px rgba(24, 28, 50, 0.2); } 
 
 .btn-accion:hover {
     transform: translateY(-2px);
