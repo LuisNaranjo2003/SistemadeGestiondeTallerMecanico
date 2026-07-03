@@ -34,7 +34,7 @@ switch ($controller) {
         die("Controlador no encontrado");
 }
 
-// Ejecutar acción si existe
+
 if (method_exists($controller, $action)) {
     $controller->$action();
 } else {
