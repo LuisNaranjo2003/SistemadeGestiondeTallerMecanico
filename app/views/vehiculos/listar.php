@@ -4,143 +4,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Vehículos</title>
-
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <title>Vehículos</title>
 </head>
 
-<body class="bg-light">
+<body>
 
-<div class="container mt-5">
+    <h1>Listado de Vehículos</h1>
 
-    <div class="card shadow">
+    <p>
+        <a href="index.php?url=vehiculos/crearForm">
+            Registrar Vehículo
+        </a>
+    </p>
 
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+    <table border="1" cellpadding="6">
 
-            <h3 class="mb-0">
-                <i class="bi bi-car-front-fill"></i>
-                Gestión de Vehículos
-            </h3>
+        <tr>
+            <th>ID</th>
+            <th>Placa</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Año</th>
+            <th>Color</th>
+            <th>Cliente</th>
+            <th>Acciones</th>
+        </tr>
 
-            <a href="index.php?controller=vehiculo&action=crear" class="btn btn-success">
-                <i class="bi bi-plus-circle"></i>
-                Nuevo Vehículo
-            </a>
+        <?php foreach ($vehiculos as $v): ?>
 
-        </div>
+            <tr>
 
-        <div class="card-body">
+                <td><?= htmlspecialchars($v["id_vehiculo"]) ?></td>
 
-            <table class="table table-bordered table-hover table-striped text-center align-middle">
+                <td><?= htmlspecialchars($v["placa"]) ?></td>
 
-                <thead class="table-dark">
+                <td><?= htmlspecialchars($v["marca"]) ?></td>
 
-                    <tr>
-                        <th>ID</th>
-                        <th>Placa</th>
-                        <th>Marca</th>
-                        <th>Modelo</th>
-                        <th>Año</th>
-                        <th>Color</th>
-                        <th>Cliente</th>
-                        <th width="180">Acciones</th>
-                    </tr>
+                <td><?= htmlspecialchars($v["modelo"]) ?></td>
 
-                </thead>
+                <td><?= htmlspecialchars($v["anio"]) ?></td>
 
-                <tbody>
+                <td><?= htmlspecialchars($v["color"]) ?></td>
 
-                <?php if($vehiculos->num_rows > 0){ ?>
+                <td><?= htmlspecialchars($v["cliente"]) ?></td>
 
-                    <?php while($fila = $vehiculos->fetch_assoc()){ ?>
+                <td>
 
-                    <tr>
+                    <a href="index.php?url=vehiculos/editarForm&id=<?= $v["id_vehiculo"] ?>">
+                        Editar
+                    </a>
 
-                        <td><?= $fila['id_vehiculo']; ?></td>
+                    |
 
-                        <td><?= $fila['placa']; ?></td>
+                    <a href="index.php?url=vehiculos/eliminar&id=<?= $v["id_vehiculo"] ?>"
+                       onclick="return confirm('¿Eliminar vehículo?')">
+                        Eliminar
+                    </a>
 
-                        <td><?= $fila['marca']; ?></td>
+                </td>
 
-                        <td><?= $fila['modelo']; ?></td>
+            </tr>
 
-                        <td><?= $fila['anio']; ?></td>
+        <?php endforeach; ?>
 
-                        <td><?= $fila['color']; ?></td>
-
-                        <td><?= $fila['cliente']; ?></td>
-
-                        <td>
-
-                            <!-- Ver -->
-                            <a href="index.php?controller=vehiculo&action=detalle&id=<?= $fila['id_vehiculo']; ?>"
-                               class="btn btn-info btn-sm"
-                               title="Ver">
-
-                                <i class="bi bi-eye-fill"></i>
-
-                            </a>
-
-                            <!-- Editar -->
-                            <a href="index.php?controller=vehiculo&action=editar&id=<?= $fila['id_vehiculo']; ?>"
-                               class="btn btn-warning btn-sm"
-                               title="Editar">
-
-                                <i class="bi bi-pencil-square"></i>
-
-                            </a>
-
-                            <!-- Eliminar -->
-                            <a href="index.php?controller=vehiculo&action=eliminar&id=<?= $fila['id_vehiculo']; ?>"
-                               class="btn btn-danger btn-sm"
-                               onclick="return confirm('¿Está seguro de eliminar este vehículo?')"
-                               title="Eliminar">
-
-                                <i class="bi bi-trash-fill"></i>
-
-                            </a>
-
-                        </td>
-
-                    </tr>
-
-                    <?php } ?>
-
-                <?php }else{ ?>
-
-                    <tr>
-
-                        <td colspan="8">
-
-                            <div class="alert alert-warning mb-0">
-
-                                <i class="bi bi-exclamation-triangle-fill"></i>
-
-                                No existen vehículos registrados.
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                <?php } ?>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </div>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    </table>
 
 </body>
+
 </html>

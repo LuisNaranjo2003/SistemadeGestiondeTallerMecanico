@@ -4,15 +4,10 @@ require_once __DIR__ . "/../config/conexion.php";
 
 class Vehiculo
 {
-    private $conexion;
-
-    public function __construct()
+    public static function obtenerTodos()
     {
-        $this->conexion = Conexion::conectar();
-    }
+        $conn = Conexion::conectar();
 
-    public function listar()
-    {
         $sql = "SELECT
                     v.id_vehiculo,
                     v.placa,
@@ -20,28 +15,30 @@ class Vehiculo
                     v.modelo,
                     v.anio,
                     v.color,
-                    CONCAT(c.nombres, ' ', c.apellidos) AS cliente
+                    CONCAT(c.nombres,' ',c.apellidos) AS cliente
                 FROM vehiculos v
                 INNER JOIN clientes c
                 ON v.cliente_id = c.id_cliente
                 ORDER BY v.id_vehiculo DESC";
 
-        return $this->conexion->query($sql);
+        $res = $conn->query($sql);
+
+        $vehiculos = [];
+
+        while($fila = $res->fetch_assoc()){
+            $vehiculos[] = $fila;
+        }
+
+        return $vehiculos;
     }
 
-    public function registrar($placa, $marca, $modelo, $anio, $color, $cliente_id)
+    public static function obtenerPorId($id)
     {
-        $sql = "INSERT INTO vehiculos
-                (placa, marca, modelo, anio, color, cliente_id)
-                VALUES
-                ('$placa','$marca','$modelo','$anio','$color','$cliente_id')";
+        $conn = Conexion::conectar();
 
-        return $this->conexion->query($sql);
-    }
+        $id = (int)$id;
 
-    public function buscar($id)
-    {
-        $sql = "SELECT 
+        $sql = "SELECT
                     v.id_vehiculo,
                     v.placa,
                     v.marca,
@@ -53,48 +50,87 @@ class Vehiculo
                 FROM vehiculos v
                 INNER JOIN clientes c
                 ON v.cliente_id = c.id_cliente
-                WHERE v.id_vehiculo='$id'";
+                WHERE v.id_vehiculo=$id
+                LIMIT 1";
 
-        return $this->conexion->query($sql)->fetch_assoc();
+        $res = $conn->query($sql);
+
+        return $res->fetch_assoc();
     }
 
-    public function actualizar($id, $placa, $marca, $modelo, $anio, $color, $cliente_id)
+    public static function crear($placa,$marca,$modelo,$anio,$color,$cliente_id)
     {
+        $conn = Conexion::conectar();
+
+        $placa = $conn->real_escape_string($placa);
+        $marca = $conn->real_escape_string($marca);
+        $modelo = $conn->real_escape_string($modelo);
+        $anio = (int)$anio;
+        $color = $conn->real_escape_string($color);
+        $cliente_id = (int)$cliente_id;
+
+        $sql = "INSERT INTO vehiculos
+                (placa,marca,modelo,anio,color,cliente_id)
+                VALUES
+                ('$placa','$marca','$modelo',$anio,'$color',$cliente_id)";
+
+        return $conn->query($sql);
+    }
+
+    public static function actualizar($id,$placa,$marca,$modelo,$anio,$color,$cliente_id)
+    {
+        $conn = Conexion::conectar();
+
+        $id = (int)$id;
+        $placa = $conn->real_escape_string($placa);
+        $marca = $conn->real_escape_string($marca);
+        $modelo = $conn->real_escape_string($modelo);
+        $anio = (int)$anio;
+        $color = $conn->real_escape_string($color);
+        $cliente_id = (int)$cliente_id;
+
         $sql = "UPDATE vehiculos SET
                     placa='$placa',
                     marca='$marca',
                     modelo='$modelo',
-                    anio='$anio',
+                    anio=$anio,
                     color='$color',
-                    cliente_id='$cliente_id'
-                WHERE id_vehiculo='$id'";
+                    cliente_id=$cliente_id
+                WHERE id_vehiculo=$id";
 
-        return $this->conexion->query($sql);
+        return $conn->query($sql);
     }
 
-    public function eliminar($id)
+    public static function eliminar($id)
     {
+        $conn = Conexion::conectar();
+
+        $id = (int)$id;
+
         $sql = "DELETE FROM vehiculos
-                WHERE id_vehiculo='$id'";
+                WHERE id_vehiculo=$id";
 
-        return $this->conexion->query($sql);
+        return $conn->query($sql);
     }
 
-    public function listarClientes()
+    public static function obtenerClientes()
     {
-        $sql = "SELECT id_cliente,
-                       CONCAT(nombres,' ',apellidos) AS cliente
+        $conn = Conexion::conectar();
+
+        $sql = "SELECT
+                    id_cliente,
+                    CONCAT(nombres,' ',apellidos) AS cliente
                 FROM clientes
                 ORDER BY nombres";
 
-        return $this->conexion->query($sql);
-    }
+        $res = $conn->query($sql);
 
-    public function existePlaca($placa)
-    {
-        $sql = "SELECT * FROM vehiculos WHERE placa='$placa'";
-        $resultado = $this->conexion->query($sql);
+        $clientes = [];
 
-        return $resultado->num_rows > 0;
+        while($fila = $res->fetch_assoc()){
+            $clientes[] = $fila;
+        }
+
+        return $clientes;
     }
 }

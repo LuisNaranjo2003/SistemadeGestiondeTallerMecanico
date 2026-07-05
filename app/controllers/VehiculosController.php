@@ -4,79 +4,81 @@ require_once __DIR__ . "/../models/Vehiculo.php";
 
 class VehiculoController
 {
-    private $modelo;
-
-    public function __construct()
+    public function listar()
     {
-        $this->modelo = new Vehiculo();
+        $vehiculos = Vehiculo::obtenerTodos();
+        require __DIR__ . "/../views/vehiculos/listar.php";
     }
 
-    public function index()
+    public function crearForm()
     {
-        $vehiculos = $this->modelo->listar();
-        require_once __DIR__ . "/../views/vehiculos/listar.php";
+        $clientes = Vehiculo::obtenerClientes();
+        require __DIR__ . "/../views/vehiculos/crear.php";
     }
 
     public function crear()
     {
-        $clientes = $this->modelo->listarClientes();
-        require_once __DIR__ . "/../views/vehiculos/agregar.php";
-    }
+        $placa = $_POST["placa"] ?? "";
+        $marca = $_POST["marca"] ?? "";
+        $modelo = $_POST["modelo"] ?? "";
+        $anio = $_POST["anio"] ?? "";
+        $color = $_POST["color"] ?? "";
+        $cliente_id = $_POST["cliente_id"] ?? 0;
 
-    public function guardar()
-    {
-        $this->modelo->registrar(
-            $_POST["placa"],
-            $_POST["marca"],
-            $_POST["modelo"],
-            $_POST["anio"],
-            $_POST["color"],
-            $_POST["cliente_id"]
+        Vehiculo::crear(
+            $placa,
+            $marca,
+            $modelo,
+            $anio,
+            $color,
+            $cliente_id
         );
 
-        header("Location: index.php?controller=vehiculo&action=index");
+        header("Location: index.php?url=vehiculos/listar");
+        exit;
     }
 
-    public function editar()
+    public function editarForm()
     {
-        $vehiculo = $this->modelo->buscar($_GET["id"]);
-        $clientes = $this->modelo->listarClientes();
+        $id = $_GET["id"] ?? 0;
 
-        require_once __DIR__ . "/../views/vehiculos/editar.php";
+        $vehiculo = Vehiculo::obtenerPorId($id);
+        $clientes = Vehiculo::obtenerClientes();
+
+        require __DIR__ . "/../views/vehiculos/editar.php";
     }
 
     public function actualizar()
     {
-        $this->modelo->actualizar(
-            $_POST["id_vehiculo"],
-            $_POST["placa"],
-            $_POST["marca"],
-            $_POST["modelo"],
-            $_POST["anio"],
-            $_POST["color"],
-            $_POST["cliente_id"]
+        $id = $_POST["id_vehiculo"] ?? 0;
+        $placa = $_POST["placa"] ?? "";
+        $marca = $_POST["marca"] ?? "";
+        $modelo = $_POST["modelo"] ?? "";
+        $anio = $_POST["anio"] ?? "";
+        $color = $_POST["color"] ?? "";
+        $cliente_id = $_POST["cliente_id"] ?? 0;
+
+        Vehiculo::actualizar(
+            $id,
+            $placa,
+            $marca,
+            $modelo,
+            $anio,
+            $color,
+            $cliente_id
         );
 
-        header("Location: index.php?controller=vehiculo&action=index");
-    }
-
-    public function detalle()
-    {
-        $vehiculo = $this->modelo->buscar($_GET["id"]);
-        require_once __DIR__ . "/../views/vehiculos/detalle.php";
+        header("Location: index.php?url=vehiculos/listar");
+        exit;
     }
 
     public function eliminar()
     {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $id = $_GET["id"] ?? 0;
 
-            $this->modelo->eliminar($_POST["id_vehiculo"]);
+        Vehiculo::eliminar($id);
 
-            header("Location: index.php?controller=vehiculo&action=index");
-        } else {
-
-            $vehiculo = $this->modelo->buscar($_GET["id"]);
-            require_once __DIR__ . "/../views/vehiculos/eliminar.php";
-        }
+        header("Location: index.php?url=vehiculos/listar");
+        exit;
     }
 }

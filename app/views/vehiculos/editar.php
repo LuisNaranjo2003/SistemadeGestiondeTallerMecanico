@@ -3,99 +3,90 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Vehículo</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 
-<body class="bg-light">
+<body>
 
-<div class="container mt-5">
+    <h1>Editar Vehículo</h1>
 
-    <div class="card shadow">
+    <?php if (!$vehiculo): ?>
 
-        <div class="card-header bg-warning">
-            <h4>
-                <i class="bi bi-pencil-square"></i>
-                Editar Vehículo
-            </h4>
-        </div>
+        <p>No existe el vehículo.</p>
 
-        <div class="card-body">
+        <p>
+            <a href="index.php?url=vehiculos/listar">Volver</a>
+        </p>
 
-            <form action="index.php?controller=vehiculo&action=actualizar" method="POST">
+    <?php else: ?>
 
-                <input type="hidden" name="id_vehiculo" value="<?= $vehiculo['id_vehiculo']; ?>">
+        <form method="POST" action="index.php?url=vehiculos/actualizar">
 
-                <div class="mb-3">
-                    <label>Placa</label>
-                    <input type="text" name="placa" class="form-control"
-                           value="<?= $vehiculo['placa']; ?>" required>
-                </div>
+            <input type="hidden"
+                   name="id_vehiculo"
+                   value="<?= htmlspecialchars($vehiculo["id_vehiculo"]) ?>">
 
-                <div class="mb-3">
-                    <label>Marca</label>
-                    <input type="text" name="marca" class="form-control"
-                           value="<?= $vehiculo['marca']; ?>" required>
-                </div>
+            <label>Placa:</label><br>
+            <input type="text"
+                   name="placa"
+                   value="<?= htmlspecialchars($vehiculo["placa"]) ?>"
+                   required><br><br>
 
-                <div class="mb-3">
-                    <label>Modelo</label>
-                    <input type="text" name="modelo" class="form-control"
-                           value="<?= $vehiculo['modelo']; ?>" required>
-                </div>
+            <label>Marca:</label><br>
+            <input type="text"
+                   name="marca"
+                   value="<?= htmlspecialchars($vehiculo["marca"]) ?>"
+                   required><br><br>
 
-                <div class="mb-3">
-                    <label>Año</label>
-                    <input type="number" name="anio" class="form-control"
-                           value="<?= $vehiculo['anio']; ?>"
-                           min="1980" max="<?= date('Y'); ?>" required>
-                </div>
+            <label>Modelo:</label><br>
+            <input type="text"
+                   name="modelo"
+                   value="<?= htmlspecialchars($vehiculo["modelo"]) ?>"
+                   required><br><br>
 
-                <div class="mb-3">
-                    <label>Color</label>
-                    <input type="text" name="color" class="form-control"
-                           value="<?= $vehiculo['color']; ?>" required>
-                </div>
+            <label>Año:</label><br>
+            <input type="number"
+                   name="anio"
+                   value="<?= htmlspecialchars($vehiculo["anio"]) ?>"
+                   required><br><br>
 
-                <div class="mb-3">
-                    <label>Cliente</label>
-                    <select name="cliente_id" class="form-control" required>
+            <label>Color:</label><br>
+            <input type="text"
+                   name="color"
+                   value="<?= htmlspecialchars($vehiculo["color"]) ?>"
+                   required><br><br>
 
-                        <?php while($c = $clientes->fetch_assoc()){ ?>
+            <label>Cliente:</label><br>
 
-                            <option value="<?= $c['id_cliente']; ?>"
-                                <?= ($c['id_cliente'] == $vehiculo['cliente_id']) ? 'selected' : ''; ?>>
+            <select name="cliente_id" required>
 
-                                <?= $c['cliente']; ?>
+                <?php foreach ($clientes as $cliente): ?>
 
-                            </option>
+                    <option
+                        value="<?= htmlspecialchars($cliente["id_cliente"]) ?>"
+                        <?= ($cliente["id_cliente"] == $vehiculo["cliente_id"]) ? "selected" : "" ?>>
 
-                        <?php } ?>
+                        <?= htmlspecialchars($cliente["cliente"]) ?>
 
-                    </select>
-                </div>
+                    </option>
 
-                <div class="d-flex justify-content-between">
+                <?php endforeach; ?>
 
-                    <a href="index.php?controller=vehiculo&action=index" class="btn btn-secondary">
-                        Volver
-                    </a>
+            </select>
 
-                    <button class="btn btn-primary">
-                        Actualizar
-                    </button>
+            <br><br>
 
-                </div>
+            <button type="submit">Actualizar</button>
 
-            </form>
+        </form>
 
-        </div>
+        <p>
+            <a href="index.php?url=vehiculos/listar">Volver</a>
+        </p>
 
-    </div>
-
-</div>
+    <?php endif; ?>
 
 </body>
+
 </html>
