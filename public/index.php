@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../app/controllers/VehiculoController.php";
+require_once __DIR__ . "/../app/controllers/VehiculosController.php";
 
 $url = $_GET["url"] ?? "vehiculos/listar";
 

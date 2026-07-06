@@ -1,54 +1,95 @@
 <?php
-require_once __DIR__ . '/../config/conexion.php';
 
-class Servicio {
-    private $conn;
-    private $tabla = "Servicio";
+require_once __DIR__ . "/../config/conexion.php";
 
-    public function __construct() {
-        $conexion = new Conexion();
-        $this->conn = $conexion->conectar();
+class Servicio
+{
+    public static function obtenerTodos()
+    {
+        $conn = Conexion::conectar();
+
+        $sql = "SELECT
+                    id_servicio,
+                    nombre_servicio,
+                    descripcion,
+                    precio
+                FROM servicio
+                ORDER BY id_servicio DESC";
+
+        $res = $conn->query($sql);
+
+        $servicios = [];
+
+        while ($fila = $res->fetch_assoc()) {
+            $servicios[] = $fila;
+        }
+
+        return $servicios;
     }
 
-    public function obtenerTodos() {
-        $query = "SELECT * FROM " . $this->tabla;
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public static function obtenerPorId($id)
+    {
+        $conn = Conexion::conectar();
+
+        $id = (int)$id;
+
+        $sql = "SELECT
+                    id_servicio,
+                    nombre_servicio,
+                    descripcion,
+                    precio
+                FROM servicio
+                WHERE id_servicio=$id
+                LIMIT 1";
+
+        $res = $conn->query($sql);
+
+        return $res->fetch_assoc();
     }
 
-    public function registrar($nombre, $descripcion, $precio) {
-        $query = "INSERT INTO " . $this->tabla . " (nombre_servicio, descripcion, precio) VALUES (:nombre, :descripcion, :precio)";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":nombre", $nombre);
-        $stmt->bindParam(":descripcion", $descripcion);
-        $stmt->bindParam(":precio", $precio);
-        return $stmt->execute();
-    }
-    
-    public function obtenerPorId($id) {
-        $query = "SELECT * FROM " . $this->tabla . " WHERE id_servicio = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $id);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+    public static function crear($nombre_servicio, $descripcion, $precio)
+    {
+        $conn = Conexion::conectar();
+
+        $nombre_servicio = $conn->real_escape_string($nombre_servicio);
+        $descripcion = $conn->real_escape_string($descripcion);
+        $precio = (float)$precio;
+
+        $sql = "INSERT INTO servicio
+                (nombre_servicio, descripcion, precio)
+                VALUES
+                ('$nombre_servicio', '$descripcion', $precio)";
+
+        return $conn->query($sql);
     }
 
-    public function actualizar($id, $nombre, $descripcion, $precio) {
-        $query = "UPDATE " . $this->tabla . " SET nombre_servicio = :nombre, descripcion = :descripcion, precio = :precio WHERE id_servicio = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":nombre", $nombre);
-        $stmt->bindParam(":descripcion", $descripcion);
-        $stmt->bindParam(":precio", $precio);
-        $stmt->bindParam(":id", $id);
-        return $stmt->execute();
+    public static function actualizar($id, $nombre_servicio, $descripcion, $precio)
+    {
+        $conn = Conexion::conectar();
+
+        $id = (int)$id;
+        $nombre_servicio = $conn->real_escape_string($nombre_servicio);
+        $descripcion = $conn->real_escape_string($descripcion);
+        $precio = (float)$precio;
+
+        $sql = "UPDATE servicio SET
+                    nombre_servicio='$nombre_servicio',
+                    descripcion='$descripcion',
+                    precio=$precio
+                WHERE id_servicio=$id";
+
+        return $conn->query($sql);
     }
 
-    public function eliminar($id) {
-        $query = "DELETE FROM " . $this->tabla . " WHERE id_servicio = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $id);
-        return $stmt->execute();
+    public static function eliminar($id)
+    {
+        $conn = Conexion::conectar();
+
+        $id = (int)$id;
+
+        $sql = "DELETE FROM servicio
+                WHERE id_servicio=$id";
+
+        return $conn->query($sql);
     }
 }
-?>
