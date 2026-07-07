@@ -1,66 +1,73 @@
 <?php
-require_once __DIR__ . '/../models/Servicio.php';
 
-class ServicioController {
-    private $modelo;
+require_once __DIR__ . "/../models/Servicios.php";
 
-    public function __construct() {
-        $this->modelo = new Servicio();
+class ServicioController
+{
+
+    public function listar()
+    {
+        $servicios = Servicio::obtenerTodos();
+
+        require __DIR__ . "/../views/servicios/listar.php";
     }
 
-    public function index() {
-        $servicios = $this->modelo->obtenerTodos();
-        require_once __DIR__ . '/../views/servicios/listar.php';
+    public function crearForm()
+    {
+        require __DIR__ . "/../views/servicios/crear.php";
     }
 
-    public function crear() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $nombre = $_POST['nombre_servicio'];
-            $descripcion = $_POST['descripcion'];
-            $precio = $_POST['precio'];
+    public function crear()
+    {
+        $nombre_servicio = $_POST["nombre_servicio"] ?? "";
+        $descripcion     = $_POST["descripcion"] ?? "";
+        $precio          = $_POST["precio"] ?? 0;
 
-            if ($this->modelo->registrar($nombre, $descripcion, $precio)) {
-                header("Location: index.php?action=index");
-            }
-        } else {
-            require_once __DIR__ . '/../views/servicios/agregar.php';
-        }
+        Servicio::crear(
+            $nombre_servicio,
+            $descripcion,
+            $precio
+        );
+
+        header("Location: index.php?url=servicios/listar");
+        exit;
     }
 
-    public function detalle() {
-        $id = $_GET['id'];
-        $servicio = $this->modelo->obtenerPorId($id);
-        require_once __DIR__ . '/../views/servicios/detalle.php';
+    public function editarForm()
+    {
+        $id = $_GET["id"] ?? 0;
+
+        $servicio = Servicio::obtenerPorId($id);
+
+        require __DIR__ . "/../views/servicios/editar.php";
     }
 
-    public function editar() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $id = $_POST['id_servicio'];
-            $nombre = $_POST['nombre_servicio'];
-            $descripcion = $_POST['descripcion'];
-            $precio = $_POST['precio'];
+    public function actualizar()
+    {
+        $id               = $_POST["id_servicio"] ?? 0;
+        $nombre_servicio  = $_POST["nombre_servicio"] ?? "";
+        $descripcion      = $_POST["descripcion"] ?? "";
+        $precio           = $_POST["precio"] ?? 0;
 
-            if ($this->modelo->actualizar($id, $nombre, $descripcion, $precio)) {
-                header("Location: index.php?action=index");
-            }
-        } else {
-            $id = $_GET['id'];
-            $servicio = $this->modelo->obtenerPorId($id);
-            require_once __DIR__ . '/../views/servicios/editar.php';
-        }
+        Servicio::actualizar(
+            $id,
+            $nombre_servicio,
+            $descripcion,
+            $precio
+        );
+
+        header("Location: index.php?url=servicios/listar");
+        exit;
     }
 
-    public function eliminar() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $id = $_POST['id_servicio'];
-            if ($this->modelo->eliminar($id)) {
-                header("Location: index.php?action=index");
-            }
-        } else {
-            $id = $_GET['id'];
-            $servicio = $this->modelo->obtenerPorId($id);
-            require_once __DIR__ . '/../views/servicios/eliminar.php';
-        }
+    public function eliminar()
+    {
+        $id = $_GET["id"] ?? 0;
+
+        Servicio::eliminar($id);
+
+        header("Location: index.php?url=servicios/listar");
+        exit;
     }
+
 }
-?>

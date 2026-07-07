@@ -13,7 +13,7 @@ class Servicio
                     nombre_servicio,
                     descripcion,
                     precio
-                FROM servicio
+                FROM servicios
                 ORDER BY id_servicio DESC";
 
         $res = $conn->query($sql);
@@ -38,7 +38,7 @@ class Servicio
                     nombre_servicio,
                     descripcion,
                     precio
-                FROM servicio
+                FROM servicios
                 WHERE id_servicio=$id
                 LIMIT 1";
 
@@ -55,7 +55,7 @@ class Servicio
         $descripcion = $conn->real_escape_string($descripcion);
         $precio = (float)$precio;
 
-        $sql = "INSERT INTO servicio
+        $sql = "INSERT INTO servicios
                 (nombre_servicio, descripcion, precio)
                 VALUES
                 ('$nombre_servicio', '$descripcion', $precio)";
@@ -72,7 +72,7 @@ class Servicio
         $descripcion = $conn->real_escape_string($descripcion);
         $precio = (float)$precio;
 
-        $sql = "UPDATE servicio SET
+        $sql = "UPDATE servicios SET
                     nombre_servicio='$nombre_servicio',
                     descripcion='$descripcion',
                     precio=$precio
@@ -87,7 +87,7 @@ class Servicio
 
         $id = (int)$id;
 
-        $sql = "DELETE FROM servicio
+        $sql = "DELETE FROM servicios
                 WHERE id_servicio=$id";
 
         return $conn->query($sql);

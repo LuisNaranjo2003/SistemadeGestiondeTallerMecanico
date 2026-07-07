@@ -1,18 +1,13 @@
-<?php
-$servicio = $servicio ?? null;
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Servicio</title>
+    <title>Registrar Servicio</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
 </head>
 
@@ -26,43 +21,22 @@ $servicio = $servicio ?? null;
 
             <div class="card shadow">
 
-                <div class="card-header bg-warning text-dark">
+                <div class="card-header bg-success text-white">
 
                     <h3 class="mb-0">
+
                         <i class="bi bi-tools"></i>
-                        Editar Servicio
+
+                        Registrar Servicio
+
                     </h3>
 
                 </div>
 
                 <div class="card-body">
 
-                    <?php if (!$servicio): ?>
-
-                        <div class="alert alert-danger">
-
-                            <i class="bi bi-exclamation-triangle-fill"></i>
-                            El servicio no existe.
-
-                        </div>
-
-                        <a href="index.php?url=servicios/listar"
-                           class="btn btn-secondary">
-
-                            <i class="bi bi-arrow-left"></i>
-                            Volver
-
-                        </a>
-
-                    <?php else: ?>
-
                     <form method="POST"
-                          action="index.php?url=servicios/actualizar">
-
-                        <input
-                            type="hidden"
-                            name="id_servicio"
-                            value="<?= htmlspecialchars($servicio["id_servicio"]) ?>">
+                          action="index.php?url=servicios/crear">
 
                         <div class="mb-3">
 
@@ -74,7 +48,7 @@ $servicio = $servicio ?? null;
                                 type="text"
                                 name="nombre_servicio"
                                 class="form-control"
-                                value="<?= htmlspecialchars($servicio["nombre_servicio"]) ?>"
+                                placeholder="Ejemplo: Cambio de aceite"
                                 required>
 
                         </div>
@@ -87,9 +61,10 @@ $servicio = $servicio ?? null;
 
                             <textarea
                                 name="descripcion"
-                                class="form-control"
                                 rows="4"
-                                required><?= htmlspecialchars($servicio["descripcion"]) ?></textarea>
+                                class="form-control"
+                                placeholder="Descripción del servicio..."
+                                required></textarea>
 
                         </div>
 
@@ -102,10 +77,9 @@ $servicio = $servicio ?? null;
                             <input
                                 type="number"
                                 step="0.01"
-                                min="0"
                                 name="precio"
                                 class="form-control"
-                                value="<?= htmlspecialchars($servicio["precio"]) ?>"
+                                placeholder="0.00"
                                 required>
 
                         </div>
@@ -116,24 +90,24 @@ $servicio = $servicio ?? null;
                                class="btn btn-secondary">
 
                                 <i class="bi bi-arrow-left"></i>
+
                                 Volver
 
                             </a>
 
                             <button
                                 type="submit"
-                                class="btn btn-warning">
+                                class="btn btn-success">
 
                                 <i class="bi bi-save"></i>
-                                Actualizar Servicio
+
+                                Guardar Servicio
 
                             </button>
 
                         </div>
 
                     </form>
-
-                    <?php endif; ?>
 
                 </div>
 
