@@ -20,115 +20,130 @@ $vehiculos = $vehiculos ?? [];
 
 <body class="bg-light">
 
-<div class="container mt-5">
+    <div class="container mt-5">
 
-    <div class="card shadow">
+        <div class="card shadow">
 
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
 
-            <h3 class="mb-0">
-                <i class="bi bi-car-front-fill"></i>
-                Gestión de Vehículos
-            </h3>
+                <h3 class="mb-0">
+                    <i class="bi bi-car-front-fill"></i>
+                    Gestión de Vehículos
+                </h3>
 
-            <a href="index.php?url=vehiculos/crearForm" class="btn btn-light">
-                <i class="bi bi-plus-circle"></i>
-                Registrar Vehículo
-            </a>
+                <div>
 
-        </div>
+                    <a href="index.php"
+                        class="btn btn-secondary me-2">
 
-        <div class="card-body">
+                        <i class="bi bi-house-door-fill"></i>
+                        Volver al Menú
 
-            <table class="table table-bordered table-hover table-striped align-middle">
+                    </a>
 
-                <thead class="table-dark">
+                    <a href="index.php?url=vehiculos/crearForm"
+                        class="btn btn-light">
 
-                    <tr>
-                        <th>ID</th>
-                        <th>Placa</th>
-                        <th>Marca</th>
-                        <th>Modelo</th>
-                        <th>Año</th>
-                        <th>Color</th>
-                        <th>Cliente</th>
-                        <th width="180">Acciones</th>
-                    </tr>
+                        <i class="bi bi-plus-circle"></i>
+                        Registrar Vehículo
 
-                </thead>
+                    </a>
 
-                <tbody>
+                </div>
 
-                <?php if(count($vehiculos)>0): ?>
+            </div>
 
-                    <?php foreach($vehiculos as $v): ?>
+            <div class="card-body">
+
+                <table class="table table-bordered table-hover table-striped align-middle">
+
+                    <thead class="table-dark">
 
                         <tr>
-
-                            <td><?= htmlspecialchars($v["id_vehiculo"]) ?></td>
-
-                            <td><?= htmlspecialchars($v["placa"]) ?></td>
-
-                            <td><?= htmlspecialchars($v["marca"]) ?></td>
-
-                            <td><?= htmlspecialchars($v["modelo"]) ?></td>
-
-                            <td><?= htmlspecialchars($v["anio"]) ?></td>
-
-                            <td><?= htmlspecialchars($v["color"]) ?></td>
-
-                            <td><?= htmlspecialchars($v["cliente"]) ?></td>
-
-                            <td>
-
-                                <a href="index.php?url=vehiculos/editarForm&id=<?= $v["id_vehiculo"] ?>"
-                                   class="btn btn-warning btn-sm">
-
-                                    <i class="bi bi-pencil-square"></i>
-
-                                </a>
-
-                                <a href="index.php?url=vehiculos/eliminar&id=<?= $v["id_vehiculo"] ?>"
-                                   class="btn btn-danger btn-sm"
-                                   onclick="return confirm('¿Desea eliminar este vehículo?')">
-
-                                    <i class="bi bi-trash"></i>
-
-                                </a>
-
-                            </td>
-
+                            <th>ID</th>
+                            <th>Placa</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Año</th>
+                            <th>Color</th>
+                            <th>Cliente</th>
+                            <th width="180">Acciones</th>
                         </tr>
 
-                    <?php endforeach; ?>
+                    </thead>
 
-                <?php else: ?>
+                    <tbody>
 
-                    <tr>
+                        <?php if (count($vehiculos) > 0): ?>
 
-                        <td colspan="8" class="text-center text-danger">
+                            <?php foreach ($vehiculos as $v): ?>
 
-                            <i class="bi bi-exclamation-circle"></i>
+                                <tr>
 
-                            No existen vehículos registrados.
+                                    <td><?= htmlspecialchars($v["id_vehiculo"]) ?></td>
 
-                        </td>
+                                    <td><?= htmlspecialchars($v["placa"]) ?></td>
 
-                    </tr>
+                                    <td><?= htmlspecialchars($v["marca"]) ?></td>
 
-                <?php endif; ?>
+                                    <td><?= htmlspecialchars($v["modelo"]) ?></td>
 
-                </tbody>
+                                    <td><?= htmlspecialchars($v["anio"]) ?></td>
 
-            </table>
+                                    <td><?= htmlspecialchars($v["color"]) ?></td>
+
+                                    <td><?= htmlspecialchars($v["cliente"]) ?></td>
+
+                                    <td>
+
+                                        <a href="index.php?url=vehiculos/editarForm&id=<?= $v["id_vehiculo"] ?>"
+                                            class="btn btn-warning btn-sm">
+
+                                            <i class="bi bi-pencil-square"></i>
+
+                                        </a>
+
+                                        <a href="index.php?url=vehiculos/eliminar&id=<?= $v["id_vehiculo"] ?>"
+                                            class="btn btn-danger btn-sm"
+                                            onclick="return confirm('¿Desea eliminar este vehículo?')">
+
+                                            <i class="bi bi-trash"></i>
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+                            <?php endforeach; ?>
+
+                        <?php else: ?>
+
+                            <tr>
+
+                                <td colspan="8" class="text-center text-danger">
+
+                                    <i class="bi bi-exclamation-circle"></i>
+
+                                    No existen vehículos registrados.
+
+                                </td>
+
+                            </tr>
+
+                        <?php endif; ?>
+
+                    </tbody>
+
+                </table>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

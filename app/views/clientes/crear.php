@@ -1,19 +1,13 @@
-<?php
-$cliente = $cliente ?? null;
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Cliente</title>
+    <title>Registrar Cliente</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
 </head>
 
@@ -27,42 +21,18 @@ $cliente = $cliente ?? null;
 
             <div class="card shadow">
 
-                <div class="card-header bg-warning">
+                <div class="card-header bg-primary text-white">
 
                     <h3 class="mb-0">
-                        <i class="bi bi-pencil-square"></i>
-                        Editar Cliente
+                        <i class="bi bi-person-plus-fill"></i>
+                        Registrar Cliente
                     </h3>
 
                 </div>
 
                 <div class="card-body">
 
-                    <?php if (!$cliente): ?>
-
-                        <div class="alert alert-danger">
-
-                            El cliente no existe.
-
-                        </div>
-
-                        <a href="index.php?url=clientes/listar"
-                           class="btn btn-secondary">
-
-                            <i class="bi bi-arrow-left"></i>
-                            Volver
-
-                        </a>
-
-                    <?php else: ?>
-
-                    <form method="POST"
-                          action="index.php?url=clientes/actualizar">
-
-                        <input
-                            type="hidden"
-                            name="id_cliente"
-                            value="<?= htmlspecialchars($cliente["id_cliente"]) ?>">
+                    <form method="POST" action="index.php?url=clientes/crear">
 
                         <div class="mb-3">
 
@@ -72,7 +42,7 @@ $cliente = $cliente ?? null;
                                 type="text"
                                 name="nombres"
                                 class="form-control"
-                                value="<?= htmlspecialchars($cliente["nombres"]) ?>"
+                                placeholder="Ingrese los nombres"
                                 required>
 
                         </div>
@@ -85,7 +55,7 @@ $cliente = $cliente ?? null;
                                 type="text"
                                 name="apellidos"
                                 class="form-control"
-                                value="<?= htmlspecialchars($cliente["apellidos"]) ?>"
+                                placeholder="Ingrese los apellidos"
                                 required>
 
                         </div>
@@ -98,8 +68,8 @@ $cliente = $cliente ?? null;
                                 type="text"
                                 name="cedula"
                                 class="form-control"
+                                placeholder="095xxxxxxxx"
                                 maxlength="10"
-                                value="<?= htmlspecialchars($cliente["cedula"]) ?>"
                                 required>
 
                         </div>
@@ -112,8 +82,8 @@ $cliente = $cliente ?? null;
                                 type="text"
                                 name="telefono"
                                 class="form-control"
+                                placeholder="09xxxxxxxx"
                                 maxlength="10"
-                                value="<?= htmlspecialchars($cliente["telefono"]) ?>"
                                 required>
 
                         </div>
@@ -126,7 +96,7 @@ $cliente = $cliente ?? null;
                                 type="email"
                                 name="correo"
                                 class="form-control"
-                                value="<?= htmlspecialchars($cliente["correo"]) ?>"
+                                placeholder="correo@ejemplo.com"
                                 required>
 
                         </div>
@@ -139,7 +109,8 @@ $cliente = $cliente ?? null;
                                 name="direccion"
                                 class="form-control"
                                 rows="3"
-                                required><?= htmlspecialchars($cliente["direccion"]) ?></textarea>
+                                placeholder="Ingrese la dirección"
+                                required></textarea>
 
                         </div>
 
@@ -153,20 +124,17 @@ $cliente = $cliente ?? null;
 
                             </a>
 
-                            <button
-                                type="submit"
-                                class="btn btn-warning">
+                            <button type="submit"
+                                    class="btn btn-primary">
 
                                 <i class="bi bi-save"></i>
-                                Actualizar Cliente
+                                Guardar Cliente
 
                             </button>
 
                         </div>
 
                     </form>
-
-                    <?php endif; ?>
 
                 </div>
 

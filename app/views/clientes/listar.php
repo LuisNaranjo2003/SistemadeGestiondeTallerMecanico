@@ -1,143 +1,150 @@
+<?php
+$clientes = $clientes ?? [];
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Clientes</title>
+    <title>Listado de Clientes</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
 </head>
 
 <body class="bg-light">
 
-<div class="container mt-5">
+    <div class="container mt-5">
 
-    <div class="card shadow">
+        <div class="card shadow">
 
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
 
-            <h3 class="mb-0">
-                <i class="bi bi-people-fill"></i>
-                Gestión de Clientes
-            </h3>
+                <h3 class="mb-0">
+                    <i class="bi bi-people-fill"></i>
+                    Gestión de Clientes
+                </h3>
 
-            <a href="index.php?controller=cliente&action=crear" class="btn btn-success">
-                <i class="bi bi-plus-circle"></i>
-                Nuevo Cliente
-            </a>
+                <div>
 
-        </div>
+                    <a href="index.php"
+                        class="btn btn-secondary me-2">
 
-        <div class="card-body">
+                        <i class="bi bi-house-door-fill"></i>
+                        Volver al Menú
 
-            <table class="table table-bordered table-hover table-striped text-center align-middle">
+                    </a>
 
-                <thead class="table-dark">
+                    <a href="index.php?url=clientes/crearForm"
+                        class="btn btn-success">
 
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombres</th>
-                        <th>Apellidos</th>
-                        <th>Cédula</th>
-                        <th>Teléfono</th>
-                        <th>Correo</th>
-                        <th width="180">Acciones</th>
-                    </tr>
+                        <i class="bi bi-plus-circle"></i>
+                        Nuevo Cliente
 
-                </thead>
+                    </a>
 
-                <tbody>
+                </div>
 
-                <?php if($clientes->num_rows > 0){ ?>
+            </div>
 
-                    <?php while($fila = $clientes->fetch_assoc()){ ?>
+            <div class="card-body">
 
-                    <tr>
+                <table class="table table-bordered table-hover table-striped align-middle">
 
-                        <td><?= $fila['id_cliente']; ?></td>
+                    <thead class="table-dark">
 
-                        <td><?= $fila['nombres']; ?></td>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Cédula</th>
+                            <th>Teléfono</th>
+                            <th>Correo</th>
+                            <th>Dirección</th>
+                            <th width="180">Acciones</th>
+                        </tr>
 
-                        <td><?= $fila['apellidos']; ?></td>
+                    </thead>
 
-                        <td><?= $fila['cedula']; ?></td>
+                    <tbody>
 
-                        <td><?= $fila['telefono']; ?></td>
+                        <?php if (count($clientes) > 0): ?>
 
-                        <td><?= $fila['correo']; ?></td>
+                            <?php foreach ($clientes as $c): ?>
 
-                        <td>
+                                <tr>
 
-                            <!-- Ver -->
-                            <a href="index.php?controller=cliente&action=detalle&id=<?= $fila['id_cliente']; ?>"
-                               class="btn btn-info btn-sm"
-                               title="Ver">
+                                    <td><?= htmlspecialchars($c["id_cliente"]) ?></td>
 
-                                <i class="bi bi-eye-fill"></i>
+                                    <td><?= htmlspecialchars($c["nombres"]) ?></td>
 
-                            </a>
+                                    <td><?= htmlspecialchars($c["apellidos"]) ?></td>
 
-                            <!-- Editar -->
-                            <a href="index.php?controller=cliente&action=editar&id=<?= $fila['id_cliente']; ?>"
-                               class="btn btn-warning btn-sm"
-                               title="Editar">
+                                    <td><?= htmlspecialchars($c["cedula"]) ?></td>
 
-                                <i class="bi bi-pencil-square"></i>
+                                    <td><?= htmlspecialchars($c["telefono"]) ?></td>
 
-                            </a>
+                                    <td><?= htmlspecialchars($c["correo"]) ?></td>
 
-                            <!-- Eliminar -->
-                            <a href="index.php?controller=cliente&action=eliminar&id=<?= $fila['id_cliente']; ?>"
-                               class="btn btn-danger btn-sm"
-                               onclick="return confirm('¿Está seguro de eliminar este cliente?')"
-                               title="Eliminar">
+                                    <td><?= htmlspecialchars($c["direccion"]) ?></td>
 
-                                <i class="bi bi-trash-fill"></i>
+                                    <td>
 
-                            </a>
+                                        <a href="index.php?url=clientes/editarForm&id=<?= $c["id_cliente"] ?>"
+                                            class="btn btn-warning btn-sm">
 
-                        </td>
+                                            <i class="bi bi-pencil-square"></i>
 
-                    </tr>
+                                        </a>
 
-                    <?php } ?>
+                                        <a href="index.php?url=clientes/eliminar&id=<?= $c["id_cliente"] ?>"
+                                            class="btn btn-danger btn-sm"
+                                            onclick="return confirm('¿Desea eliminar este cliente?')">
 
-                <?php }else{ ?>
+                                            <i class="bi bi-trash"></i>
 
-                    <tr>
+                                        </a>
 
-                        <td colspan="7">
+                                    </td>
 
-                            <div class="alert alert-warning mb-0">
+                                </tr>
 
-                                <i class="bi bi-exclamation-triangle-fill"></i>
+                            <?php endforeach; ?>
 
-                                No existen clientes registrados.
+                        <?php else: ?>
 
-                            </div>
+                            <tr>
 
-                        </td>
+                                <td colspan="8" class="text-center text-danger">
 
-                    </tr>
+                                    <i class="bi bi-exclamation-circle"></i>
 
-                <?php } ?>
+                                    No existen clientes registrados.
 
-                </tbody>
+                                </td>
 
-            </table>
+                            </tr>
+
+                        <?php endif; ?>
+
+                    </tbody>
+
+                </table>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>
