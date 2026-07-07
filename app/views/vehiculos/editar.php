@@ -1,3 +1,8 @@
+<?php
+$vehiculo = $vehiculo ?? null;
+$clientes = $clientes ?? [];
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,87 +10,187 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Vehículo</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
 </head>
 
-<body>
+<body class="bg-light">
 
-    <h1>Editar Vehículo</h1>
+<div class="container mt-5">
 
-    <?php if (!$vehiculo): ?>
+    <div class="row justify-content-center">
 
-        <p>No existe el vehículo.</p>
+        <div class="col-md-8">
 
-        <p>
-            <a href="index.php?url=vehiculos/listar">Volver</a>
-        </p>
+            <div class="card shadow">
 
-    <?php else: ?>
+                <div class="card-header bg-warning">
 
-        <form method="POST" action="index.php?url=vehiculos/actualizar">
+                    <h3 class="mb-0">
+                        <i class="bi bi-pencil-square"></i>
+                        Editar Vehículo
+                    </h3>
 
-            <input type="hidden"
-                   name="id_vehiculo"
-                   value="<?= htmlspecialchars($vehiculo["id_vehiculo"]) ?>">
+                </div>
 
-            <label>Placa:</label><br>
-            <input type="text"
-                   name="placa"
-                   value="<?= htmlspecialchars($vehiculo["placa"]) ?>"
-                   required><br><br>
+                <div class="card-body">
 
-            <label>Marca:</label><br>
-            <input type="text"
-                   name="marca"
-                   value="<?= htmlspecialchars($vehiculo["marca"]) ?>"
-                   required><br><br>
+                    <?php if (!$vehiculo): ?>
 
-            <label>Modelo:</label><br>
-            <input type="text"
-                   name="modelo"
-                   value="<?= htmlspecialchars($vehiculo["modelo"]) ?>"
-                   required><br><br>
+                        <div class="alert alert-danger">
 
-            <label>Año:</label><br>
-            <input type="number"
-                   name="anio"
-                   value="<?= htmlspecialchars($vehiculo["anio"]) ?>"
-                   required><br><br>
+                            El vehículo no existe.
 
-            <label>Color:</label><br>
-            <input type="text"
-                   name="color"
-                   value="<?= htmlspecialchars($vehiculo["color"]) ?>"
-                   required><br><br>
+                        </div>
 
-            <label>Cliente:</label><br>
+                        <a href="index.php?url=vehiculos/listar"
+                           class="btn btn-secondary">
 
-            <select name="cliente_id" required>
+                            <i class="bi bi-arrow-left"></i>
+                            Volver
 
-                <?php foreach ($clientes as $cliente): ?>
+                        </a>
 
-                    <option
-                        value="<?= htmlspecialchars($cliente["id_cliente"]) ?>"
-                        <?= ($cliente["id_cliente"] == $vehiculo["cliente_id"]) ? "selected" : "" ?>>
+                    <?php else: ?>
 
-                        <?= htmlspecialchars($cliente["cliente"]) ?>
+                    <form method="POST"
+                          action="index.php?url=vehiculos/actualizar">
 
-                    </option>
+                        <input
+                            type="hidden"
+                            name="id_vehiculo"
+                            value="<?= htmlspecialchars($vehiculo["id_vehiculo"]) ?>">
 
-                <?php endforeach; ?>
+                        <div class="mb-3">
 
-            </select>
+                            <label class="form-label">Placa</label>
 
-            <br><br>
+                            <input
+                                type="text"
+                                name="placa"
+                                class="form-control"
+                                value="<?= htmlspecialchars($vehiculo["placa"]) ?>"
+                                required>
 
-            <button type="submit">Actualizar</button>
+                        </div>
 
-        </form>
+                        <div class="mb-3">
 
-        <p>
-            <a href="index.php?url=vehiculos/listar">Volver</a>
-        </p>
+                            <label class="form-label">Marca</label>
 
-    <?php endif; ?>
+                            <input
+                                type="text"
+                                name="marca"
+                                class="form-control"
+                                value="<?= htmlspecialchars($vehiculo["marca"]) ?>"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">Modelo</label>
+
+                            <input
+                                type="text"
+                                name="modelo"
+                                class="form-control"
+                                value="<?= htmlspecialchars($vehiculo["modelo"]) ?>"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">Año</label>
+
+                            <input
+                                type="number"
+                                name="anio"
+                                class="form-control"
+                                value="<?= htmlspecialchars($vehiculo["anio"]) ?>"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">Color</label>
+
+                            <input
+                                type="text"
+                                name="color"
+                                class="form-control"
+                                value="<?= htmlspecialchars($vehiculo["color"]) ?>"
+                                required>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label">Cliente</label>
+
+                            <select
+                                name="cliente_id"
+                                class="form-select"
+                                required>
+
+                                <?php foreach ($clientes as $cliente): ?>
+
+                                    <option
+                                        value="<?= htmlspecialchars($cliente["id_cliente"]) ?>"
+                                        <?= ($cliente["id_cliente"] == $vehiculo["cliente_id"]) ? "selected" : "" ?>>
+
+                                        <?= htmlspecialchars($cliente["cliente"]) ?>
+
+                                    </option>
+
+                                <?php endforeach; ?>
+
+                            </select>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+
+                            <a href="index.php?url=vehiculos/listar"
+                               class="btn btn-secondary">
+
+                                <i class="bi bi-arrow-left"></i>
+                                Volver
+
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="btn btn-warning">
+
+                                <i class="bi bi-save"></i>
+                                Actualizar Vehículo
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                    <?php endif; ?>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

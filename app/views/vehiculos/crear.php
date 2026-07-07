@@ -1,60 +1,165 @@
+<?php
+$clientes = $clientes ?? [];
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Vehículo</title>
+    <title>Registrar Vehículo</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
 </head>
 
-<body>
+<body class="bg-light">
 
-    <h1>Crear Vehículo</h1>
+<div class="container mt-5">
 
-    <form method="POST" action="index.php?url=vehiculos/crear">
+    <div class="row justify-content-center">
 
-        <label>Placa:</label><br>
-        <input type="text" name="placa" required><br><br>
+        <div class="col-md-8">
 
-        <label>Marca:</label><br>
-        <input type="text" name="marca" required><br><br>
+            <div class="card shadow">
 
-        <label>Modelo:</label><br>
-        <input type="text" name="modelo" required><br><br>
+                <div class="card-header bg-success text-white">
 
-        <label>Año:</label><br>
-        <input type="number" name="anio" min="1980" max="<?= date('Y'); ?>" required><br><br>
+                    <h3 class="mb-0">
+                        <i class="bi bi-car-front-fill"></i>
+                        Registrar Vehículo
+                    </h3>
 
-        <label>Color:</label><br>
-        <input type="text" name="color" required><br><br>
+                </div>
 
-        <label>Cliente:</label><br>
+                <div class="card-body">
 
-        <select name="cliente_id" required>
+                    <form method="POST" action="index.php?url=vehiculos/crear">
 
-            <option value="">Seleccione un cliente</option>
+                        <div class="mb-3">
 
-            <?php foreach ($clientes as $cliente): ?>
+                            <label class="form-label">Placa</label>
 
-                <option value="<?= htmlspecialchars($cliente['id_cliente']) ?>">
-                    <?= htmlspecialchars($cliente['cliente']) ?>
-                </option>
+                            <input
+                                type="text"
+                                name="placa"
+                                class="form-control"
+                                placeholder="Ejemplo: ABC-1234"
+                                required>
 
-            <?php endforeach; ?>
+                        </div>
 
-        </select>
+                        <div class="mb-3">
 
-        <br><br>
+                            <label class="form-label">Marca</label>
 
-        <button type="submit">Guardar</button>
+                            <input
+                                type="text"
+                                name="marca"
+                                class="form-control"
+                                placeholder="Toyota"
+                                required>
 
-        <p>
-            <a href="index.php?url=vehiculos/listar">
-                Volver
-            </a>
-        </p>
+                        </div>
 
-    </form>
+                        <div class="mb-3">
+
+                            <label class="form-label">Modelo</label>
+
+                            <input
+                                type="text"
+                                name="modelo"
+                                class="form-control"
+                                placeholder="Corolla"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">Año</label>
+
+                            <input
+                                type="number"
+                                name="anio"
+                                class="form-control"
+                                min="1980"
+                                max="<?= date('Y'); ?>"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">Color</label>
+
+                            <input
+                                type="text"
+                                name="color"
+                                class="form-control"
+                                placeholder="Blanco"
+                                required>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label">Cliente</label>
+
+                            <select
+                                name="cliente_id"
+                                class="form-select"
+                                required>
+
+                                <option value="">Seleccione un cliente</option>
+
+                                <?php foreach ($clientes as $cliente): ?>
+
+                                    <option value="<?= htmlspecialchars($cliente['id_cliente']) ?>">
+                                        <?= htmlspecialchars($cliente['cliente']) ?>
+                                    </option>
+
+                                <?php endforeach; ?>
+
+                            </select>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+
+                            <a href="index.php?url=vehiculos/listar"
+                               class="btn btn-secondary">
+
+                                <i class="bi bi-arrow-left"></i>
+                                Volver
+
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-success">
+
+                                <i class="bi bi-save"></i>
+                                Guardar Vehículo
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
