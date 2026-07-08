@@ -19,219 +19,225 @@ $errores = $errores ?? [];
 
 <body class="bg-light">
 
-<div class="container mt-5">
+    <div class="container mt-5">
 
-    <div class="row justify-content-center">
+        <div class="row justify-content-center">
 
-        <div class="col-md-9">
+            <div class="col-md-9">
 
-            <div class="card shadow">
+                <div class="card shadow">
 
-                <div class="card-header bg-success text-white">
+                    <div class="card-header bg-success text-white">
 
-                    <h3 class="mb-0">
-                        <i class="bi bi-clipboard-check-fill"></i>
-                        Registrar Orden de Trabajo
-                    </h3>
+                        <h3 class="mb-0">
+                            <i class="bi bi-clipboard-check-fill"></i>
+                            Registrar Orden de Trabajo
+                        </h3>
 
-                </div>
+                    </div>
 
-                <div class="card-body">
+                    <div class="card-body">
 
-                    <?php if (!empty($errores)): ?>
+                        <?php if (!empty($errores)): ?>
 
-                        <div class="alert alert-danger">
+                            <div class="alert alert-danger">
 
-                            <ul class="mb-0">
+                                <ul class="mb-0">
 
-                                <?php foreach ($errores as $error): ?>
+                                    <?php foreach ($errores as $error): ?>
 
-                                    <li><?= htmlspecialchars($error) ?></li>
+                                        <li><?= htmlspecialchars($error) ?></li>
 
-                                <?php endforeach; ?>
+                                    <?php endforeach; ?>
 
-                            </ul>
+                                </ul>
 
-                        </div>
+                            </div>
 
-                    <?php endif; ?>
+                        <?php endif; ?>
 
-                    <form method="POST" action="index.php?url=ordenes/crear">
+                        <form method="POST" action="index.php?url=ordenes/crear">
 
-                        <div class="mb-3">
+                            <div class="mb-3">
 
-                            <label class="form-label">
-                                <i class="bi bi-car-front-fill"></i>
-                                Vehículo
-                            </label>
+                                <label class="form-label">
+                                    <i class="bi bi-car-front-fill"></i>
+                                    Vehículo
+                                </label>
 
-                            <select
-                                name="vehiculo_id"
-                                class="form-select"
-                                required>
+                                <select
+                                    name="vehiculo_id"
+                                    class="form-select"
+                                    required>
 
-                                <option value="">Seleccione un vehículo</option>
+                                    <option value="">Seleccione un vehículo</option>
 
-                                <?php foreach ($vehiculos as $v): ?>
+                                    <?php foreach ($vehiculos as $v): ?>
 
-                                    <option
-                                        value="<?= htmlspecialchars($v["id_vehiculo"]) ?>"
-                                        <?= (($_POST["vehiculo_id"] ?? "") == $v["id_vehiculo"]) ? "selected" : "" ?>>
+                                        <option
+                                            value="<?= htmlspecialchars($v["id_vehiculo"]) ?>"
+                                            <?= (($_POST["vehiculo_id"] ?? "") == $v["id_vehiculo"]) ? "selected" : "" ?>>
 
-                                        <?= htmlspecialchars($v["vehiculo"]) ?>
+                                            <?= htmlspecialchars($v["vehiculo"]) ?>
 
-                                    </option>
+                                        </option>
 
-                                <?php endforeach; ?>
+                                    <?php endforeach; ?>
 
-                            </select>
+                                </select>
 
-                        </div>
+                            </div>
 
-                        <div class="mb-3">
+                            <div class="mb-3">
 
-                            <label class="form-label">
-                                <i class="bi bi-person-badge-fill"></i>
-                                Mecánico
-                            </label>
+                                <label class="form-label">
+                                    <i class="bi bi-person-badge-fill"></i>
+                                    Mecánico
+                                </label>
 
-                            <select
-                                name="mecanico_id"
-                                class="form-select"
-                                required>
+                                <select
+                                    name="mecanico_id"
+                                    class="form-select"
+                                    required>
 
-                                <option value="">Seleccione un mecánico</option>
+                                    <option value="">Seleccione un mecánico</option>
 
-                                <?php foreach ($mecanicos as $m): ?>
+                                    <?php foreach ($mecanicos as $m): ?>
 
-                                    <option
-                                        value="<?= htmlspecialchars($m["id_mecanico"]) ?>"
-                                        <?= (($_POST["mecanico_id"] ?? "") == $m["id_mecanico"]) ? "selected" : "" ?>>
+                                        <option
+                                            value="<?= htmlspecialchars($m["id_mecanico"]) ?>"
+                                            <?= (($_POST["mecanico_id"] ?? "") == $m["id_mecanico"]) ? "selected" : "" ?>>
 
-                                        <?= htmlspecialchars($m["nombre"]) ?>
+                                            <?= htmlspecialchars($m["nombre"]) ?>
 
-                                    </option>
+                                        </option>
 
-                                <?php endforeach; ?>
+                                    <?php endforeach; ?>
 
-                            </select>
+                                </select>
 
-                        </div>
+                            </div>
 
-                        <div class="mb-3">
+                            <div class="mb-3">
 
-                            <label class="form-label">
-                                <i class="bi bi-tools"></i>
-                                Servicio
-                            </label>
+                                <label class="form-label">
+                                    <i class="bi bi-tools"></i>
+                                    Servicio
+                                </label>
 
-                            <select
-                                name="servicio_id"
-                                class="form-select"
-                                required>
+                                <select
+                                    name="servicio_id"
+                                    class="form-select"
+                                    required>
 
-                                <option value="">Seleccione un servicio</option>
+                                    <option value="">Seleccione un servicio</option>
 
-                                <?php foreach ($servicios as $s): ?>
+                                    <?php foreach ($servicios as $s): ?>
 
-                                    <option
-                                        value="<?= htmlspecialchars($s["id_servicio"]) ?>"
-                                        <?= (($_POST["servicio_id"] ?? "") == $s["id_servicio"]) ? "selected" : "" ?>>
+                                        <option
+                                            value="<?= htmlspecialchars($s["id_servicio"]) ?>"
+                                            <?= (($_POST["servicio_id"] ?? "") == $s["id_servicio"]) ? "selected" : "" ?>>
 
-                                        <?= htmlspecialchars($s["nombre_servicio"]) ?>
+                                            <?= htmlspecialchars($s["nombre_servicio"]) ?>
 
-                                    </option>
+                                        </option>
 
-                                <?php endforeach; ?>
+                                    <?php endforeach; ?>
 
-                            </select>
+                                </select>
 
-                        </div>
+                            </div>
 
-                        <div class="mb-3">
+                            <div class="mb-3">
 
-                            <label class="form-label">
-                                <i class="bi bi-calendar-event"></i>
-                                Fecha
-                            </label>
+                                <label class="form-label">
+                                    <i class="bi bi-calendar-event"></i>
+                                    Fecha
+                                </label>
 
-                            <input
-                                type="date"
-                                name="fecha"
-                                class="form-control"
-                                value="<?= htmlspecialchars($_POST["fecha"] ?? date("Y-m-d")) ?>"
-                                required>
+                                <input
+                                    type="date"
+                                    name="fecha"
+                                    class="form-control"
+                                    value="<?= htmlspecialchars($_POST["fecha"] ?? date("Y-m-d")) ?>"
+                                    required>
 
-                        </div>
+                            </div>
 
-                        <div class="mb-3">
+                            <div class="mb-3">
 
-                            <label class="form-label">
-                                <i class="bi bi-card-text"></i>
-                                Observaciones
-                            </label>
+                                <label class="form-label">
+                                    <i class="bi bi-card-text"></i>
+                                    Observaciones
+                                </label>
 
-                            <textarea
-                                name="observaciones"
-                                rows="4"
-                                class="form-control"><?= htmlspecialchars($_POST["observaciones"] ?? "") ?></textarea>
+                                <textarea
+                                    name="observaciones"
+                                    rows="4"
+                                    class="form-control"><?= htmlspecialchars($_POST["observaciones"] ?? "") ?></textarea>
 
-                        </div>
+                            </div>
 
-                        <div class="mb-4">
+                            <div class="mb-4">
 
-                            <label class="form-label">
-                                <i class="bi bi-flag-fill"></i>
-                                Estado
-                            </label>
+                                <label class="form-label">
+                                    <i class="bi bi-flag-fill"></i>
+                                    Estado
+                                </label>
 
-                            <?php $estado = $_POST["estado"] ?? ""; ?>
+                                <?php $estado = $_POST["estado"] ?? ""; ?>
 
-                            <select
-                                name="estado"
-                                class="form-select"
-                                required>
+                                <select
+                                    name="estado"
+                                    class="form-select"
+                                    required>
 
-                                <option value="">Seleccione un estado</option>
+                                    <option value="">Seleccione un estado</option>
 
-                                <option value="pendiente" <?= $estado == "pendiente" ? "selected" : "" ?>>
-                                    Pendiente
-                                </option>
+                                    <<option value="pendiente" <?= $estado == "pendiente" ? "selected" : "" ?>>
+                                        Pendiente
+                                        </option>
 
-                                <option value="en proceso" <?= $estado == "en proceso" ? "selected" : "" ?>>
-                                    En proceso
-                                </option>
+                                        <option value="en proceso" <?= $estado == "en proceso" ? "selected" : "" ?>>
+                                            En proceso
+                                        </option>
 
-                                <option value="finalizado" <?= $estado == "finalizado" ? "selected" : "" ?>>
-                                    Finalizado
-                                </option>
+                                        <option value="finalizado" <?= $estado == "finalizado" ? "selected" : "" ?>>
+                                            Finalizado
+                                        </option>
 
-                            </select>
+                                        <option value="cancelado" <?= $estado == "cancelado" ? "selected" : "" ?>>
+                                            Cancelado
+                                        </option>
 
-                        </div>
+                                </select>
 
-                        <div class="d-flex justify-content-between">
+                            </div>
 
-                            <a href="index.php?url=ordenes/listar"
-                               class="btn btn-secondary">
+                            <div class="d-flex justify-content-between">
 
-                                <i class="bi bi-arrow-left"></i>
-                                Volver
+                                <a href="index.php?url=ordenes/listar"
+                                    class="btn btn-secondary">
 
-                            </a>
+                                    <i class="bi bi-arrow-left"></i>
+                                    Volver
 
-                            <button
-                                type="submit"
-                                class="btn btn-success">
+                                </a>
 
-                                <i class="bi bi-save"></i>
-                                Guardar Orden
+                                <button
+                                    type="submit"
+                                    class="btn btn-success">
 
-                            </button>
+                                    <i class="bi bi-save"></i>
+                                    Guardar Orden
 
-                        </div>
+                                </button>
 
-                    </form>
+                            </div>
+
+                        </form>
+
+                    </div>
 
                 </div>
 
@@ -241,9 +247,7 @@ $errores = $errores ?? [];
 
     </div>
 
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
