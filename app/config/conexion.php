@@ -5,28 +5,15 @@ class Conexion
     public static function conectar()
     {
         $host = getenv("DB_HOST");
+        $bd = getenv("DB_NAME");
         $usuario = getenv("DB_USER");
         $pass = getenv("DB_PASSWORD");
-        $bd = getenv("DB_NAME");
         $puerto = getenv("DB_PORT");
 
-        $conn = mysqli_init();
+        $conn = new mysqli($host, $usuario, $pass, $bd, $puerto);
 
-        mysqli_ssl_set($conn, NULL, NULL, __DIR__ . "/certificados/ca.pem", NULL, NULL);
-
-        mysqli_real_connect(
-            $conn,
-            $host,
-            $usuario,
-            $pass,
-            $bd,
-            $puerto,
-            NULL,
-            MYSQLI_CLIENT_SSL
-        );
-
-        if (mysqli_connect_errno()) {
-            die("Error de conexión: " . mysqli_connect_error());
+        if ($conn->connect_error) {
+            die("Error de conexión: " . $conn->connect_error);
         }
 
         $conn->set_charset("utf8");
