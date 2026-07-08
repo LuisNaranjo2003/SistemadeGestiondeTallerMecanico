@@ -12,7 +12,7 @@ class Conexion
 
         $conn = mysqli_init();
 
-        mysqli_ssl_set($conn, NULL, NULL, "/etc/ssl/certs/ca-certificates.crt", NULL, NULL);
+        mysqli_ssl_set($conn, NULL, NULL, __DIR__ . "/certificados/ca.pem", NULL, NULL);
 
         mysqli_real_connect(
             $conn,
