@@ -65,6 +65,7 @@ $ordenes = $ordenes ?? [];
                         <th>ID</th>
                         <th>Vehículo</th>
                         <th>Mecánico</th>
+                        <th>Servicio</th>
                         <th>Fecha</th>
                         <th>Estado</th>
                         <th width="170">Acciones</th>
@@ -108,6 +109,14 @@ $ordenes = $ordenes ?? [];
                                 <i class="bi bi-person-fill text-primary"></i>
 
                                 <?= htmlspecialchars($orden["nombre_mecanico"]) ?>
+
+                            </td>
+
+                            <td>
+
+                                <i class="bi bi-tools text-success"></i>
+
+                                <?= htmlspecialchars($orden["nombre_servicio"]) ?>
 
                             </td>
 
@@ -170,7 +179,7 @@ $ordenes = $ordenes ?? [];
 
                     <tr>
 
-                        <td colspan="6" class="text-center">
+                        <td colspan="7" class="text-center">
 
                             <div class="alert alert-warning mb-0">
 

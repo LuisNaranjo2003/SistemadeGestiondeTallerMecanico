@@ -1,6 +1,7 @@
 <?php
 $vehiculos = $vehiculos ?? [];
 $mecanicos = $mecanicos ?? [];
+$servicios = $servicios ?? [];
 $errores = $errores ?? [];
 ?>
 
@@ -120,6 +121,36 @@ $errores = $errores ?? [];
                         <div class="mb-3">
 
                             <label class="form-label">
+                                <i class="bi bi-tools"></i>
+                                Servicio
+                            </label>
+
+                            <select
+                                name="servicio_id"
+                                class="form-select"
+                                required>
+
+                                <option value="">Seleccione un servicio</option>
+
+                                <?php foreach ($servicios as $s): ?>
+
+                                    <option
+                                        value="<?= htmlspecialchars($s["id_servicio"]) ?>"
+                                        <?= (($_POST["servicio_id"] ?? "") == $s["id_servicio"]) ? "selected" : "" ?>>
+
+                                        <?= htmlspecialchars($s["nombre_servicio"]) ?>
+
+                                    </option>
+
+                                <?php endforeach; ?>
+
+                            </select>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
                                 <i class="bi bi-calendar-event"></i>
                                 Fecha
                             </label>
@@ -215,4 +246,5 @@ $errores = $errores ?? [];
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

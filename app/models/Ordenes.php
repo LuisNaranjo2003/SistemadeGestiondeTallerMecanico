@@ -20,15 +20,21 @@ class Ordenes
                     v.modelo,
 
                     m.id_mecanico,
-                    CONCAT(m.nombres,' ',m.apellidos) AS nombre_mecanico
+                    CONCAT(m.nombres,' ',m.apellidos) AS nombre_mecanico,
+
+                    s.id_servicio,
+                    s.nombre_servicio
 
                 FROM ordenes o
 
                 INNER JOIN vehiculos v
-                    ON o.vehiculo_id=v.id_vehiculo
+                    ON o.vehiculo_id = v.id_vehiculo
 
                 INNER JOIN mecanicos m
-                    ON o.mecanico_id=m.id_mecanico
+                    ON o.mecanico_id = m.id_mecanico
+
+                INNER JOIN servicios s
+                    ON o.servicio_id = s.id_servicio
 
                 ORDER BY o.id_orden DESC";
 
@@ -50,8 +56,8 @@ class Ordenes
         $id = (int)$id;
 
         $sql = "SELECT *
-              FROM ordenes
-              WHERE id_orden=$id";
+                FROM ordenes
+                WHERE id_orden=$id";
 
         $res = $conn->query($sql);
 
@@ -66,23 +72,28 @@ class Ordenes
 
         $sql = "SELECT
 
-                o.*,
+                    o.*,
 
-                v.placa,
-                v.marca,
-                v.modelo,
+                    v.placa,
+                    v.marca,
+                    v.modelo,
 
-                CONCAT(m.nombres,' ',m.apellidos) AS nombre_mecanico
+                    CONCAT(m.nombres,' ',m.apellidos) AS nombre_mecanico,
 
-              FROM ordenes o
+                    s.nombre_servicio
 
-              INNER JOIN vehiculos v
+                FROM ordenes o
+
+                INNER JOIN vehiculos v
                     ON o.vehiculo_id=v.id_vehiculo
 
-              INNER JOIN mecanicos m
+                INNER JOIN mecanicos m
                     ON o.mecanico_id=m.id_mecanico
 
-              WHERE o.id_orden=$id";
+                INNER JOIN servicios s
+                    ON o.servicio_id=s.id_servicio
+
+                WHERE o.id_orden=$id";
 
         $res = $conn->query($sql);
 
@@ -95,16 +106,17 @@ class Ordenes
 
         $vehiculo = (int)$datos["vehiculo_id"];
         $mecanico = (int)$datos["mecanico_id"];
+        $servicio = (int)$datos["servicio_id"];
 
         $fecha = $conn->real_escape_string($datos["fecha"]);
         $observaciones = $conn->real_escape_string($datos["observaciones"]);
         $estado = $conn->real_escape_string($datos["estado"]);
 
         $sql = "INSERT INTO ordenes
-              (vehiculo_id,mecanico_id,fecha,observaciones,estado)
+                (vehiculo_id,mecanico_id,servicio_id,fecha,observaciones,estado)
 
-              VALUES
-              ($vehiculo,$mecanico,'$fecha','$observaciones','$estado')";
+                VALUES
+                ($vehiculo,$mecanico,$servicio,'$fecha','$observaciones','$estado')";
 
         return $conn->query($sql);
     }
@@ -117,6 +129,7 @@ class Ordenes
 
         $vehiculo = (int)$datos["vehiculo_id"];
         $mecanico = (int)$datos["mecanico_id"];
+        $servicio = (int)$datos["servicio_id"];
 
         $fecha = $conn->real_escape_string($datos["fecha"]);
         $observaciones = $conn->real_escape_string($datos["observaciones"]);
@@ -124,13 +137,14 @@ class Ordenes
 
         $sql = "UPDATE ordenes SET
 
-                vehiculo_id=$vehiculo,
-                mecanico_id=$mecanico,
-                fecha='$fecha',
-                observaciones='$observaciones',
-                estado='$estado'
+                    vehiculo_id=$vehiculo,
+                    mecanico_id=$mecanico,
+                    servicio_id=$servicio,
+                    fecha='$fecha',
+                    observaciones='$observaciones',
+                    estado='$estado'
 
-              WHERE id_orden=$id";
+                WHERE id_orden=$id";
 
         return $conn->query($sql);
     }
@@ -149,10 +163,10 @@ class Ordenes
         $conn = Conexion::conectar();
 
         $sql = "SELECT
-                id_vehiculo,
-                CONCAT(placa,' | ',marca,' | ',modelo) AS vehiculo
-            FROM vehiculos
-            ORDER BY placa";
+                    id_vehiculo,
+                    CONCAT(placa,' | ',marca,' | ',modelo) AS vehiculo
+                FROM vehiculos
+                ORDER BY placa";
 
         $res = $conn->query($sql);
 
@@ -170,10 +184,10 @@ class Ordenes
         $conn = Conexion::conectar();
 
         $sql = "SELECT
-                id_mecanico,
-                CONCAT(nombres,' ',apellidos) AS nombre
-            FROM mecanicos
-            ORDER BY nombres";
+                    id_mecanico,
+                    CONCAT(nombres,' ',apellidos) AS nombre
+                FROM mecanicos
+                ORDER BY nombres";
 
         $res = $conn->query($sql);
 
@@ -184,5 +198,26 @@ class Ordenes
         }
 
         return $mecanicos;
+    }
+
+    public static function listarServicios()
+    {
+        $conn = Conexion::conectar();
+
+        $sql = "SELECT
+                    id_servicio,
+                    nombre_servicio
+                FROM servicios
+                ORDER BY nombre_servicio";
+
+        $res = $conn->query($sql);
+
+        $servicios = [];
+
+        while ($fila = $res->fetch_assoc()) {
+            $servicios[] = $fila;
+        }
+
+        return $servicios;
     }
 }

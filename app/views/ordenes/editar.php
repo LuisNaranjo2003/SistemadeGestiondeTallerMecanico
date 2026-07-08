@@ -2,6 +2,7 @@
 $orden = $orden ?? null;
 $vehiculos = $vehiculos ?? [];
 $mecanicos = $mecanicos ?? [];
+$servicios = $servicios ?? [];
 $errores = $errores ?? [];
 ?>
 
@@ -80,7 +81,6 @@ $errores = $errores ?? [];
                                 name="id_orden"
                                 value="<?= htmlspecialchars($orden["id_orden"]) ?>">
 
-
                             <div class="mb-3">
 
                                 <label class="form-label">
@@ -109,7 +109,6 @@ $errores = $errores ?? [];
 
                             </div>
 
-
                             <div class="mb-3">
 
                                 <label class="form-label">
@@ -129,6 +128,34 @@ $errores = $errores ?? [];
                                             <?= ($m["id_mecanico"] == $orden["mecanico_id"]) ? "selected" : "" ?>>
 
                                             <?= htmlspecialchars($m["nombre"]) ?>
+
+                                        </option>
+
+                                    <?php endforeach; ?>
+
+                                </select>
+
+                            </div>
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    <i class="bi bi-tools"></i>
+                                    Servicio
+                                </label>
+
+                                <select
+                                    name="servicio_id"
+                                    class="form-select"
+                                    required>
+
+                                    <?php foreach ($servicios as $s): ?>
+
+                                        <option
+                                            value="<?= htmlspecialchars($s["id_servicio"]) ?>"
+                                            <?= ($s["id_servicio"] == $orden["servicio_id"]) ? "selected" : "" ?>>
+
+                                            <?= htmlspecialchars($s["nombre_servicio"]) ?>
 
                                         </option>
 
