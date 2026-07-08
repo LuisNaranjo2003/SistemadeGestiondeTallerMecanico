@@ -157,4 +157,4 @@ index.php
 
 ## Autores
 
-Proyecto académico desarrollado para la materia de Desarrollo de Aplicaciones Web 6-7 Ciclo 1 2026-2027, por Luis Naranjo, Katherine Maldonado, Joseph Calderon, Misael Junto y Andy Miranda.
+Proyecto académico desarrollado para la materia de Desarrollo de Aplicaciones Web 6-7 Ciclo 1 2026-2027, por Luis Naranjo, Katherine Maldonado, Joseph Calderon, Misael Junco y Andy Miranda.
