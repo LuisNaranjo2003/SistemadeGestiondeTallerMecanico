@@ -1,60 +1,203 @@
+<?php
+$ordenes = $ordenes ?? [];
+?>
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Órdenes de Trabajo</title>
-    <link rel="stylesheet" href="../../../public/css/estilos.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Órdenes de Trabajo</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
 </head>
-<body>
-<div class="contenedor-principal">
 
-    <div class="header-container">
-        <h1>Órdenes de Trabajo</h1>
-        <a href="index.php?url=vehiculos/listar" class="btn-volver">← Volver al menú</a>
-    </div>
+<body class="bg-light">
 
-    <a href="index.php?url=ordenes/crearForm" class="btn-agregar">+ Nueva Orden</a>
+<div class="container mt-5">
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Vehículo</th>
-                <th>Mecánico</th>
-                <th>Fecha</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (!empty($ordenes)): ?>
-                <?php foreach ($ordenes as $orden): ?>
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+
+            <h3 class="mb-0">
+
+                <i class="bi bi-clipboard-check-fill"></i>
+                Gestión de Órdenes de Trabajo
+
+            </h3>
+
+            <div>
+
+                <a href="index.php"
+                   class="btn btn-secondary me-2">
+
+                    <i class="bi bi-house-door-fill"></i>
+                    Volver al Menú
+
+                </a>
+
+                <a href="index.php?url=ordenes/crearForm"
+                   class="btn btn-light">
+
+                    <i class="bi bi-plus-circle"></i>
+                    Nueva Orden
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-bordered table-hover table-striped align-middle">
+
+                <thead class="table-dark">
+
                     <tr>
-                        <td>#<?php echo htmlspecialchars($orden['id_orden']); ?></td>
-                        <td><?php echo htmlspecialchars($orden['placa'] . ' - ' . $orden['modelo']); ?></td>
-                        <td><?php echo htmlspecialchars($orden['nombre_mecanico']); ?></td>
-                        <td><?php echo htmlspecialchars($orden['fecha']); ?></td>
-                        <td><?php echo htmlspecialchars(ucfirst($orden['estado'])); ?></td>
-                        <td>
-                            <a href="index.php?url=ordenes/detalle&id=<?php echo $orden['id_orden']; ?>" class="btn-accion btn-ver">Ver</a>
-                            <a href="index.php?url=ordenes/editarForm&id=<?php echo $orden['id_orden']; ?>" class="btn-accion btn-editar">Editar</a>
-                            <a href="index.php?url=ordenes/eliminar&id=<?php echo $orden['id_orden']; ?>"
-                               class="btn-accion btn-eliminar"
-                               onclick="return confirm('¿Está seguro de eliminar esta orden? Esta acción no se puede deshacer.');">Eliminar</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="6" style="text-align:center;">No hay órdenes registradas todavía.</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
 
-    <div class="footer">
-        <strong>Sistema de Gestión Taller Mecánico</strong> — Módulo de Órdenes
+                        <th>ID</th>
+                        <th>Vehículo</th>
+                        <th>Mecánico</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th width="170">Acciones</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                <?php if (!empty($ordenes)): ?>
+
+                    <?php foreach ($ordenes as $orden): ?>
+
+                        <tr>
+
+                            <td>
+
+                                <strong>#<?= htmlspecialchars($orden["id_orden"]) ?></strong>
+
+                            </td>
+
+                            <td>
+
+                                <strong><?= htmlspecialchars($orden["marca"]) ?></strong><br>
+
+                                <?= htmlspecialchars($orden["modelo"]) ?><br>
+
+                                <span class="text-muted">
+
+                                    <i class="bi bi-credit-card-2-front"></i>
+
+                                    <?= htmlspecialchars($orden["placa"]) ?>
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <i class="bi bi-person-fill text-primary"></i>
+
+                                <?= htmlspecialchars($orden["nombre_mecanico"]) ?>
+
+                            </td>
+
+                            <td>
+
+                                <?= htmlspecialchars($orden["fecha"]) ?>
+
+                            </td>
+
+                            <td>
+
+                                <?php if ($orden["estado"] == "pendiente"): ?>
+
+                                    <span class="badge bg-warning text-dark">
+                                        Pendiente
+                                    </span>
+
+                                <?php elseif ($orden["estado"] == "en proceso"): ?>
+
+                                    <span class="badge bg-primary">
+                                        En Proceso
+                                    </span>
+
+                                <?php else: ?>
+
+                                    <span class="badge bg-success">
+                                        Finalizado
+                                    </span>
+
+                                <?php endif; ?>
+
+                            </td>
+
+                            <td>
+
+                                <a href="index.php?url=ordenes/editarForm&id=<?= $orden["id_orden"] ?>"
+                                   class="btn btn-warning btn-sm"
+                                   title="Editar">
+
+                                    <i class="bi bi-pencil-square"></i>
+
+                                </a>
+
+                                <a href="index.php?url=ordenes/eliminar&id=<?= $orden["id_orden"] ?>"
+                                   class="btn btn-danger btn-sm"
+                                   title="Eliminar"
+                                   onclick="return confirm('¿Desea eliminar esta orden de trabajo?');">
+
+                                    <i class="bi bi-trash"></i>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    <?php endforeach; ?>
+
+                <?php else: ?>
+
+                    <tr>
+
+                        <td colspan="6" class="text-center">
+
+                            <div class="alert alert-warning mb-0">
+
+                                <i class="bi bi-exclamation-circle-fill"></i>
+
+                                No existen órdenes de trabajo registradas.
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                <?php endif; ?>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
     </div>
+
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>

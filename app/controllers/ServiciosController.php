@@ -7,7 +7,7 @@ class ServicioController
 
     public function listar()
     {
-        $servicios = Servicio::obtenerTodos();
+        $servicios = Servicios::obtenerTodos();
 
         require __DIR__ . "/../views/servicios/listar.php";
     }
@@ -23,7 +23,7 @@ class ServicioController
         $descripcion     = $_POST["descripcion"] ?? "";
         $precio          = $_POST["precio"] ?? 0;
 
-        Servicio::crear(
+        Servicios::crear(
             $nombre_servicio,
             $descripcion,
             $precio
@@ -37,7 +37,7 @@ class ServicioController
     {
         $id = $_GET["id"] ?? 0;
 
-        $servicio = Servicio::obtenerPorId($id);
+        $servicio = Servicios::obtenerPorId($id);
 
         require __DIR__ . "/../views/servicios/editar.php";
     }
@@ -49,7 +49,7 @@ class ServicioController
         $descripcion      = $_POST["descripcion"] ?? "";
         $precio           = $_POST["precio"] ?? 0;
 
-        Servicio::actualizar(
+        Servicios::actualizar(
             $id,
             $nombre_servicio,
             $descripcion,
@@ -64,7 +64,7 @@ class ServicioController
     {
         $id = $_GET["id"] ?? 0;
 
-        Servicio::eliminar($id);
+        Servicios::eliminar($id);
 
         header("Location: index.php?url=servicios/listar");
         exit;

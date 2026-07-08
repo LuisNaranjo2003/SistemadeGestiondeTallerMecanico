@@ -1,176 +1,93 @@
 <?php
-require_once __DIR__ . "/../models/OrdenModel.php";
 
-class OrdenController
+require_once __DIR__ . "/../models/Ordenes.php";
+
+class OrdenesController
 {
     private $model;
 
     public function __construct()
     {
-        $this->model = new OrdenModel();
+        $this->model = new Ordenes();
     }
 
-    // GET ordenes/listar
-    public function index()
+    public function listar()
     {
         $ordenes = $this->model->listarTodos();
-        require_once __DIR__ . "/../views/ordenes/listar.php";
+        require __DIR__ . "/../views/ordenes/listar.php";
     }
 
-    // GET ordenes/crearForm
+    public function crearForm()
+    {
+        $errores = [];
+        $vehiculos = $this->model->listarVehiculos();
+        $mecanicos = $this->model->listarMecanicos();
+
+        require __DIR__ . "/../views/ordenes/crear.php";
+    }
+
     public function crear()
     {
-        $errores = [];
-        $vehiculos = $this->model->listarVehiculos();
-        $mecanicos = $this->model->listarMecanicos();
-        require_once __DIR__ . "/../views/ordenes/crear.php";
-    }
-
-    // POST ordenes/crear
-    public function guardar()
-    {
-        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-            header("Location: index.php?url=ordenes/listar");
-            exit;
-        }
-
-        $datos = $this->obtenerDatosFormulario();
-        $errores = $this->validar($datos);
-
-        if (!empty($errores)) {
-            $vehiculos = $this->model->listarVehiculos();
-            $mecanicos = $this->model->listarMecanicos();
-            require_once __DIR__ . "/../views/ordenes/crear.php";
-            return;
-        }
+        $datos = [
+            "vehiculo_id"   => $_POST["vehiculo_id"] ?? "",
+            "mecanico_id"   => $_POST["mecanico_id"] ?? "",
+            "fecha"         => $_POST["fecha"] ?? "",
+            "observaciones" => $_POST["observaciones"] ?? "",
+            "estado"        => $_POST["estado"] ?? ""
+        ];
 
         $this->model->crear($datos);
+
         header("Location: index.php?url=ordenes/listar");
         exit;
     }
 
-    // GET ordenes/editarForm&id=
-    public function editar()
+    public function editarForm()
     {
-        $id = $_GET['id'] ?? null;
-        if (!$id) {
-            header("Location: index.php?url=ordenes/listar");
-            exit;
-        }
+        $id = $_GET["id"] ?? 0;
 
-        $errores = [];
         $orden = $this->model->obtenerPorId($id);
-        if (!$orden) {
-            header("Location: index.php?url=ordenes/listar");
-            exit;
-        }
 
         $vehiculos = $this->model->listarVehiculos();
         $mecanicos = $this->model->listarMecanicos();
-        require_once __DIR__ . "/../views/ordenes/editar.php";
+
+        require __DIR__ . "/../views/ordenes/editar.php";
     }
 
-    // POST ordenes/actualizar
     public function actualizar()
     {
-        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-            header("Location: index.php?url=ordenes/listar");
-            exit;
-        }
+        $id = $_POST["id_orden"] ?? 0;
 
-        $id = $_POST['id_orden'] ?? null;
-        if (!$id) {
-            header("Location: index.php?url=ordenes/listar");
-            exit;
-        }
-
-        $datos = $this->obtenerDatosFormulario();
-        $errores = $this->validar($datos);
-
-        if (!empty($errores)) {
-            $orden = $this->model->obtenerPorId($id);
-            $orden = array_merge($orden, $datos, ['id_orden' => $id]);
-            $vehiculos = $this->model->listarVehiculos();
-            $mecanicos = $this->model->listarMecanicos();
-            require_once __DIR__ . "/../views/ordenes/editar.php";
-            return;
-        }
+        $datos = [
+            "vehiculo_id"   => $_POST["vehiculo_id"] ?? "",
+            "mecanico_id"   => $_POST["mecanico_id"] ?? "",
+            "fecha"         => $_POST["fecha"] ?? "",
+            "observaciones" => $_POST["observaciones"] ?? "",
+            "estado"        => $_POST["estado"] ?? ""
+        ];
 
         $this->model->actualizar($id, $datos);
+
         header("Location: index.php?url=ordenes/listar");
         exit;
     }
 
-    // GET ordenes/detalle&id=
     public function detalle()
     {
-        $id = $_GET['id'] ?? null;
-        if (!$id) {
-            header("Location: index.php?url=ordenes/listar");
-            exit;
-        }
+        $id = $_GET["id"] ?? 0;
 
         $orden = $this->model->obtenerDetalle($id);
-        if (!$orden) {
-            header("Location: index.php?url=ordenes/listar");
-            exit;
-        }
 
-        require_once __DIR__ . "/../views/ordenes/detalle.php";
+        require __DIR__ . "/../views/ordenes/detalle.php";
     }
 
-    // GET ordenes/eliminar&id=
     public function eliminar()
     {
-        $id = $_GET['id'] ?? null;
-        if ($id) {
-            $this->model->eliminar($id);
-        }
+        $id = $_GET["id"] ?? 0;
+
+        $this->model->eliminar($id);
+
         header("Location: index.php?url=ordenes/listar");
         exit;
-    }
-
-    // ---------- Métodos privados de apoyo ----------
-
-    private function obtenerDatosFormulario()
-    {
-        return [
-            'vehiculo_id'   => $_POST['vehiculo_id'] ?? '',
-            'mecanico_id'   => $_POST['mecanico_id'] ?? '',
-            'fecha'         => trim($_POST['fecha'] ?? ''),
-            'observaciones' => trim($_POST['observaciones'] ?? ''),
-            'estado'        => trim($_POST['estado'] ?? ''),
-        ];
-    }
-
-    // Validaciones de backend (obligatorias según la rúbrica del proyecto)
-    private function validar($datos)
-    {
-        $errores = [];
-
-        if (empty($datos['vehiculo_id'])) {
-            $errores[] = "Debe seleccionar un vehículo.";
-        }
-        if (empty($datos['mecanico_id'])) {
-            $errores[] = "Debe seleccionar un mecánico.";
-        }
-        if (empty($datos['fecha'])) {
-            $errores[] = "La fecha es obligatoria.";
-        } elseif (!$this->esFechaValida($datos['fecha'])) {
-            $errores[] = "La fecha ingresada no es válida.";
-        }
-        if (empty($datos['estado'])) {
-            $errores[] = "El estado es obligatorio.";
-        } elseif (!in_array($datos['estado'], ['pendiente', 'en proceso', 'finalizado'])) {
-            $errores[] = "El estado seleccionado no es válido.";
-        }
-
-        return $errores;
-    }
-
-    private function esFechaValida($fecha)
-    {
-        $d = DateTime::createFromFormat('Y-m-d', $fecha);
-        return $d && $d->format('Y-m-d') === $fecha;
     }
 }

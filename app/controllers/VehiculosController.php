@@ -6,13 +6,13 @@ class VehiculoController
 {
     public function listar()
     {
-        $vehiculos = Vehiculo::obtenerTodos();
+        $vehiculos = Vehiculos::obtenerTodos();
         require __DIR__ . "/../views/vehiculos/listar.php";
     }
 
     public function crearForm()
     {
-        $clientes = Vehiculo::obtenerClientes();
+        $clientes = Vehiculos::obtenerClientes();
         require __DIR__ . "/../views/vehiculos/crear.php";
     }
 
@@ -25,7 +25,7 @@ class VehiculoController
         $color = $_POST["color"] ?? "";
         $cliente_id = $_POST["cliente_id"] ?? 0;
 
-        Vehiculo::crear(
+        Vehiculos::crear(
             $placa,
             $marca,
             $modelo,
@@ -42,8 +42,8 @@ class VehiculoController
     {
         $id = $_GET["id"] ?? 0;
 
-        $vehiculo = Vehiculo::obtenerPorId($id);
-        $clientes = Vehiculo::obtenerClientes();
+        $vehiculo = Vehiculos::obtenerPorId($id);
+        $clientes = Vehiculos::obtenerClientes();
 
         require __DIR__ . "/../views/vehiculos/editar.php";
     }
@@ -58,7 +58,7 @@ class VehiculoController
         $color = $_POST["color"] ?? "";
         $cliente_id = $_POST["cliente_id"] ?? 0;
 
-        Vehiculo::actualizar(
+        Vehiculos::actualizar(
             $id,
             $placa,
             $marca,
@@ -76,7 +76,7 @@ class VehiculoController
     {
         $id = $_GET["id"] ?? 0;
 
-        Vehiculo::eliminar($id);
+        Vehiculos::eliminar($id);
 
         header("Location: index.php?url=vehiculos/listar");
         exit;

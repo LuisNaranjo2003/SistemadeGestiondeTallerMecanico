@@ -1,102 +1,188 @@
 <?php
-require_once __DIR__ . "/../../config/database.php";
 
-class OrdenModel
+require_once __DIR__ . "/../config/conexion.php";
+
+class Ordenes
 {
-    private $conn;
-    private $table = "orden";
-
-
-    public function __construct()
+    public static function listarTodos()
     {
         $conn = Conexion::conectar();
-    }
 
-    public function listarTodos()
-    {
-        $sql = "SELECT o.*, v.placa, v.modelo, m.nombre AS nombre_mecanico
-                FROM {$this->table} o
-                INNER JOIN vehiculo v ON o.vehiculo_id = v.id_vehiculo
-                INNER JOIN mecanico m ON o.mecanico_id = m.id_mecanico
+        $sql = "SELECT
+                    o.id_orden,
+                    o.fecha,
+                    o.observaciones,
+                    o.estado,
+
+                    v.id_vehiculo,
+                    v.placa,
+                    v.marca,
+                    v.modelo,
+
+                    m.id_mecanico,
+                    CONCAT(m.nombres,' ',m.apellidos) AS nombre_mecanico
+
+                FROM ordenes o
+
+                INNER JOIN vehiculos v
+                    ON o.vehiculo_id=v.id_vehiculo
+
+                INNER JOIN mecanicos m
+                    ON o.mecanico_id=m.id_mecanico
+
                 ORDER BY o.id_orden DESC";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $res = $conn->query($sql);
+
+        $ordenes = [];
+
+        while ($fila = $res->fetch_assoc()) {
+            $ordenes[] = $fila;
+        }
+
+        return $ordenes;
     }
 
-    public function obtenerPorId($id)
+    public static function obtenerPorId($id)
     {
-        $sql = "SELECT * FROM {$this->table} WHERE id_orden = :id";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $conn = Conexion::conectar();
+
+        $id = (int)$id;
+
+        $sql = "SELECT *
+              FROM ordenes
+              WHERE id_orden=$id";
+
+        $res = $conn->query($sql);
+
+        return $res->fetch_assoc();
     }
 
-    public function obtenerDetalle($id)
+    public static function obtenerDetalle($id)
     {
-        $sql = "SELECT o.*, v.placa, v.modelo, m.nombre AS nombre_mecanico
-                FROM {$this->table} o
-                INNER JOIN vehiculo v ON o.vehiculo_id = v.id_vehiculo
-                INNER JOIN mecanico m ON o.mecanico_id = m.id_mecanico
-                WHERE o.id_orden = :id";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $conn = Conexion::conectar();
+
+        $id = (int)$id;
+
+        $sql = "SELECT
+
+                o.*,
+
+                v.placa,
+                v.marca,
+                v.modelo,
+
+                CONCAT(m.nombres,' ',m.apellidos) AS nombre_mecanico
+
+              FROM ordenes o
+
+              INNER JOIN vehiculos v
+                    ON o.vehiculo_id=v.id_vehiculo
+
+              INNER JOIN mecanicos m
+                    ON o.mecanico_id=m.id_mecanico
+
+              WHERE o.id_orden=$id";
+
+        $res = $conn->query($sql);
+
+        return $res->fetch_assoc();
     }
 
-    public function crear($datos)
+    public static function crear($datos)
     {
-        $sql = "INSERT INTO {$this->table} (vehiculo_id, mecanico_id, fecha, observaciones, estado)
-                VALUES (:vehiculo_id, :mecanico_id, :fecha, :observaciones, :estado)";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(":vehiculo_id", $datos['vehiculo_id'], PDO::PARAM_INT);
-        $stmt->bindParam(":mecanico_id", $datos['mecanico_id'], PDO::PARAM_INT);
-        $stmt->bindParam(":fecha", $datos['fecha']);
-        $stmt->bindParam(":observaciones", $datos['observaciones']);
-        $stmt->bindParam(":estado", $datos['estado']);
-        return $stmt->execute();
+        $conn = Conexion::conectar();
+
+        $vehiculo = (int)$datos["vehiculo_id"];
+        $mecanico = (int)$datos["mecanico_id"];
+
+        $fecha = $conn->real_escape_string($datos["fecha"]);
+        $observaciones = $conn->real_escape_string($datos["observaciones"]);
+        $estado = $conn->real_escape_string($datos["estado"]);
+
+        $sql = "INSERT INTO ordenes
+              (vehiculo_id,mecanico_id,fecha,observaciones,estado)
+
+              VALUES
+              ($vehiculo,$mecanico,'$fecha','$observaciones','$estado')";
+
+        return $conn->query($sql);
     }
 
-    public function actualizar($id, $datos)
+    public static function actualizar($id, $datos)
     {
-        $sql = "UPDATE {$this->table}
-                SET vehiculo_id = :vehiculo_id,
-                    mecanico_id = :mecanico_id,
-                    fecha = :fecha,
-                    observaciones = :observaciones,
-                    estado = :estado
-                WHERE id_orden = :id";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(":vehiculo_id", $datos['vehiculo_id'], PDO::PARAM_INT);
-        $stmt->bindParam(":mecanico_id", $datos['mecanico_id'], PDO::PARAM_INT);
-        $stmt->bindParam(":fecha", $datos['fecha']);
-        $stmt->bindParam(":observaciones", $datos['observaciones']);
-        $stmt->bindParam(":estado", $datos['estado']);
-        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-        return $stmt->execute();
+        $conn = Conexion::conectar();
+
+        $id = (int)$id;
+
+        $vehiculo = (int)$datos["vehiculo_id"];
+        $mecanico = (int)$datos["mecanico_id"];
+
+        $fecha = $conn->real_escape_string($datos["fecha"]);
+        $observaciones = $conn->real_escape_string($datos["observaciones"]);
+        $estado = $conn->real_escape_string($datos["estado"]);
+
+        $sql = "UPDATE ordenes SET
+
+                vehiculo_id=$vehiculo,
+                mecanico_id=$mecanico,
+                fecha='$fecha',
+                observaciones='$observaciones',
+                estado='$estado'
+
+              WHERE id_orden=$id";
+
+        return $conn->query($sql);
     }
 
-    public function eliminar($id)
+    public static function eliminar($id)
     {
-        $sql = "DELETE FROM {$this->table} WHERE id_orden = :id";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-        return $stmt->execute();
+        $conn = Conexion::conectar();
+
+        $id = (int)$id;
+
+        return $conn->query("DELETE FROM ordenes WHERE id_orden=$id");
     }
 
-    public function listarVehiculos()
+    public static function listarVehiculos()
     {
-        $stmt = $this->conn->prepare("SELECT id_vehiculo, placa, modelo FROM vehiculo ORDER BY placa");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $conn = Conexion::conectar();
+
+        $sql = "SELECT
+                id_vehiculo,
+                CONCAT(placa,' | ',marca,' | ',modelo) AS vehiculo
+            FROM vehiculos
+            ORDER BY placa";
+
+        $res = $conn->query($sql);
+
+        $vehiculos = [];
+
+        while ($fila = $res->fetch_assoc()) {
+            $vehiculos[] = $fila;
+        }
+
+        return $vehiculos;
     }
 
-    public function listarMecanicos()
+    public static function listarMecanicos()
     {
-        $stmt = $this->conn->prepare("SELECT id_mecanico, nombre FROM mecanico ORDER BY nombre");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $conn = Conexion::conectar();
+
+        $sql = "SELECT
+                id_mecanico,
+                CONCAT(nombres,' ',apellidos) AS nombre
+            FROM mecanicos
+            ORDER BY nombres";
+
+        $res = $conn->query($sql);
+
+        $mecanicos = [];
+
+        while ($fila = $res->fetch_assoc()) {
+            $mecanicos[] = $fila;
+        }
+
+        return $mecanicos;
     }
 }

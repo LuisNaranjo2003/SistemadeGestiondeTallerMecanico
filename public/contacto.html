@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contacto | Sistema de Gestión de Taller Mecánico</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <style>
+
+        body{
+            background:#f5f5f5;
+        }
+
+        .banner{
+            background:url("img/fondo.png") center center/cover no-repeat;
+            height:280px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            position:relative;
+            color:white;
+        }
+
+        .banner::before{
+            content:"";
+            position:absolute;
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,.55);
+        }
+
+        .banner h1{
+            position:relative;
+            z-index:2;
+            font-size:45px;
+            font-weight:bold;
+        }
+
+        .card{
+            border:none;
+            border-radius:15px;
+        }
+
+        footer{
+            margin-top:40px;
+            background:#0d6efd;
+            color:white;
+            text-align:center;
+            padding:18px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="banner">
+
+    <h1>
+
+        <i class="bi bi-envelope-fill"></i>
+
+        Contáctanos
+
+    </h1>
+
+</div>
+
+<div class="container my-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow">
+
+                <div class="card-body p-5">
+
+                    <h3 class="text-center text-primary mb-4">
+
+                        Formulario de Contacto
+
+                    </h3>
+
+                    <form id="formContacto" novalidate>
+
+                        <div class="mb-3">
+
+                            <label for="nombre" class="form-label">
+
+                                <i class="bi bi-person-fill"></i>
+
+                                Nombre Completo
+
+                            </label>
+
+                            <input
+                                type="text"
+                                id="nombre"
+                                class="form-control"
+                                placeholder="Ingrese su nombre"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label for="correo" class="form-label">
+
+                                <i class="bi bi-envelope-fill"></i>
+
+                                Correo Electrónico
+
+                            </label>
+
+                            <input
+                                type="email"
+                                id="correo"
+                                class="form-control"
+                                placeholder="ejemplo@correo.com"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label for="telefono" class="form-label">
+
+                                <i class="bi bi-telephone-fill"></i>
+
+                                Teléfono
+
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="telefono"
+                                class="form-control"
+                                placeholder="0999999999"
+                                maxlength="10"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label for="asunto" class="form-label">
+
+                                <i class="bi bi-chat-left-text-fill"></i>
+
+                                Asunto
+
+                            </label>
+
+                            <input
+                                type="text"
+                                id="asunto"
+                                class="form-control"
+                                placeholder="Ingrese el asunto"
+                                required>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label for="mensaje" class="form-label">
+
+                                <i class="bi bi-pencil-square"></i>
+
+                                Mensaje
+
+                            </label>
+
+                            <textarea
+                                id="mensaje"
+                                rows="5"
+                                class="form-control"
+                                placeholder="Escriba su mensaje"
+                                required></textarea>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+
+                            <a href="index.html"
+                                class="btn btn-secondary">
+
+                                <i class="bi bi-arrow-left-circle"></i>
+
+                                Volver
+
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary">
+
+                                <i class="bi bi-send-fill"></i>
+
+                                Enviar Mensaje
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+
+    <strong>Sistema de Gestión de Taller Mecánico</strong><br>
+
+    © 2026 - Todos los derechos reservados.
+
+</footer>
+
+<script src="js/script.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

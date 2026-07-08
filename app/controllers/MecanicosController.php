@@ -1,13 +1,13 @@
 <?php
 
-require_once __DIR__ . "/../models/Mecanico.php";
+require_once __DIR__ . "/../models/Mecanicos.php";
 
 class MecanicoController
 {
     public function listar()
     {
         
-        $mecanicos = Mecanico::obtenerTodos();
+        $mecanicos = Mecanicos::obtenerTodos();
     
         require __DIR__ . "/../views/mecanicos/listar.php";
     }
@@ -27,7 +27,7 @@ class MecanicoController
         $correo = $_POST["correo"] ?? "";
 
       
-        Mecanico::crear(
+        Mecanicos::crear(
             $nombres,
             $apellidos,
             $especialidad,
@@ -46,7 +46,7 @@ class MecanicoController
         $id = $_GET["id"] ?? 0;
 
        
-        $mecanico = Mecanico::obtenerPorId($id);
+        $mecanico = Mecanicos::obtenerPorId($id);
 
     
         require __DIR__ . "/../views/mecanicos/editar.php";
@@ -63,7 +63,7 @@ class MecanicoController
         $correo = $_POST["correo"] ?? "";
 
        
-        Mecanico::actualizar(
+        Mecanicos::actualizar(
             $id,
             $nombres,
             $apellidos,
@@ -83,7 +83,7 @@ class MecanicoController
         $id = $_GET["id"] ?? 0;
 
        
-        Mecanico::eliminar($id);
+        Mecanicos::eliminar($id);
 
        
         header("Location: index.php?url=mecanicos/listar");

@@ -176,6 +176,67 @@ if ($url == "") {
 
                 </div>
 
+                <div class="col-md-5">
+
+                    <div class="card card-menu shadow">
+
+                        <div class="card-body text-center p-5">
+
+                            <i class="bi bi-person-badge-fill text-danger icono"></i>
+
+                            <h3 class="mt-3">
+                                Mecánicos
+                            </h3>
+
+                            <p class="text-muted">
+                                Registrar y administrar mecánicos del taller.
+                            </p>
+
+                            <a href="index.php?url=mecanicos/listar"
+                                class="btn btn-danger">
+
+                                <i class="bi bi-arrow-right-circle"></i>
+
+                                Ingresar
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-md-5">
+
+                    <div class="card card-menu shadow">
+
+                        <div class="card-body text-center p-5">
+
+                            <i class="bi bi-clipboard-check-fill text-secondary icono"></i>
+
+                            <h3 class="mt-3">
+                                Órdenes de Trabajo
+                            </h3>
+
+                            <p class="text-muted">
+                                Registrar y administrar órdenes de trabajo del taller.
+                            </p>
+
+                            <a href="index.php?url=ordenes/listar"
+                                class="btn btn-secondary">
+
+                                <i class="bi bi-arrow-right-circle"></i>
+
+                                Ingresar
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
@@ -249,34 +310,93 @@ switch ($url) {
         require_once __DIR__ . "/../app/controllers/ClientesController.php";
         (new ClienteController())->eliminar();
         break;
-case "servicios/listar":
-        require_once __DIR__."/../app/controllers/ServiciosController.php";
+    case "servicios/listar":
+        require_once __DIR__ . "/../app/controllers/ServiciosController.php";
         (new ServicioController())->listar();
         break;
 
     case "servicios/crearForm":
-        require_once __DIR__."/../app/controllers/ServiciosController.php";
+        require_once __DIR__ . "/../app/controllers/ServiciosController.php";
         (new ServicioController())->crearForm();
         break;
 
     case "servicios/crear":
-        require_once __DIR__."/../app/controllers/ServiciosController.php";
+        require_once __DIR__ . "/../app/controllers/ServiciosController.php";
         (new ServicioController())->crear();
         break;
 
     case "servicios/editarForm":
-        require_once __DIR__."/../app/controllers/ServiciosController.php";
+        require_once __DIR__ . "/../app/controllers/ServiciosController.php";
         (new ServicioController())->editarForm();
         break;
 
     case "servicios/actualizar":
-        require_once __DIR__."/../app/controllers/ServiciosController.php";
+        require_once __DIR__ . "/../app/controllers/ServiciosController.php";
         (new ServicioController())->actualizar();
         break;
 
     case "servicios/eliminar":
-        require_once __DIR__."/../app/controllers/ServiciosController.php";
+        require_once __DIR__ . "/../app/controllers/ServiciosController.php";
         (new ServicioController())->eliminar();
+        break;
+
+    case "mecanicos/listar":
+        require_once __DIR__ . "/../app/controllers/MecanicosController.php";
+        (new MecanicoController())->listar();
+        break;
+
+    case "mecanicos/crearForm":
+        require_once __DIR__ . "/../app/controllers/MecanicosController.php";
+        (new MecanicoController())->crearForm();
+        break;
+
+    case "mecanicos/crear":
+        require_once __DIR__ . "/../app/controllers/MecanicosController.php";
+        (new MecanicoController())->crear();
+        break;
+
+    case "mecanicos/editarForm":
+        require_once __DIR__ . "/../app/controllers/MecanicosController.php";
+        (new MecanicoController())->editarForm();
+        break;
+
+    case "mecanicos/actualizar":
+        require_once __DIR__ . "/../app/controllers/MecanicosController.php";
+        (new MecanicoController())->actualizar();
+        break;
+
+    case "mecanicos/eliminar":
+        require_once __DIR__ . "/../app/controllers/MecanicosController.php";
+        (new MecanicoController())->eliminar();
+        break;
+    case "ordenes/listar":
+        require_once __DIR__ . "/../app/controllers/OrdenesController.php";
+        (new OrdenesController())->listar();
+        break;
+
+    case "ordenes/crearForm":
+        require_once __DIR__ . "/../app/controllers/OrdenesController.php";
+        (new OrdenesController())->crearForm();
+        break;
+
+    case "ordenes/crear":
+        require_once __DIR__ . "/../app/controllers/OrdenesController.php";
+        (new OrdenesController())->crear();
+        break;
+
+    case "ordenes/editarForm":
+        require_once __DIR__ . "/../app/controllers/OrdenesController.php";
+        (new OrdenesController())->editarForm();
+        break;
+
+    case "ordenes/actualizar":
+        require_once __DIR__ . "/../app/controllers/OrdenesController.php";
+        (new OrdenesController())->actualizar();
+        break;
+
+    case "ordenes/eliminar":
+        require_once __DIR__ . "/../app/controllers/OrdenesController.php";
+        (new OrdenesController())->eliminar();
         break;
     default:
 

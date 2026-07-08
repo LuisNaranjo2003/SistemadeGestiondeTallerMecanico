@@ -6,7 +6,7 @@ class ClienteController
 {
     public function listar()
     {
-        $clientes = Cliente::obtenerTodos();
+        $clientes = Clientes::obtenerTodos();
         require __DIR__ . "/../views/clientes/listar.php";
     }
 
@@ -24,7 +24,7 @@ class ClienteController
         $correo    = $_POST["correo"] ?? "";
         $direccion = $_POST["direccion"] ?? "";
 
-        Cliente::crear(
+        Clientes::crear(
             $nombres,
             $apellidos,
             $cedula,
@@ -41,7 +41,7 @@ class ClienteController
     {
         $id = $_GET["id"] ?? 0;
 
-        $cliente = Cliente::obtenerPorId($id);
+        $cliente = Clientes::obtenerPorId($id);
 
         require __DIR__ . "/../views/clientes/editar.php";
     }
@@ -56,7 +56,7 @@ class ClienteController
         $correo    = $_POST["correo"] ?? "";
         $direccion = $_POST["direccion"] ?? "";
 
-        Cliente::actualizar(
+        Clientes::actualizar(
             $id,
             $nombres,
             $apellidos,
@@ -74,7 +74,7 @@ class ClienteController
     {
         $id = $_GET["id"] ?? 0;
 
-        Cliente::eliminar($id);
+        Clientes::eliminar($id);
 
         header("Location: index.php?url=clientes/listar");
         exit;

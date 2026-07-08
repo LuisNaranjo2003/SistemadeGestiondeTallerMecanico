@@ -1,73 +1,218 @@
+<?php
+$vehiculos = $vehiculos ?? [];
+$mecanicos = $mecanicos ?? [];
+$errores = $errores ?? [];
+?>
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Nueva Orden de Trabajo</title>
-    <link rel="stylesheet" href="../../../public/css/estilos.css">
-</head>
-<body>
-<div class="contenedor-principal">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Orden de Trabajo</title>
 
-    <div class="header-container">
-        <h1>Nueva Orden de Trabajo</h1>
-        <a href="index.php?url=ordenes/listar" class="btn-volver">← Volver</a>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-9">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-success text-white">
+
+                    <h3 class="mb-0">
+                        <i class="bi bi-clipboard-check-fill"></i>
+                        Registrar Orden de Trabajo
+                    </h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <?php if (!empty($errores)): ?>
+
+                        <div class="alert alert-danger">
+
+                            <ul class="mb-0">
+
+                                <?php foreach ($errores as $error): ?>
+
+                                    <li><?= htmlspecialchars($error) ?></li>
+
+                                <?php endforeach; ?>
+
+                            </ul>
+
+                        </div>
+
+                    <?php endif; ?>
+
+                    <form method="POST" action="index.php?url=ordenes/crear">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                <i class="bi bi-car-front-fill"></i>
+                                Vehículo
+                            </label>
+
+                            <select
+                                name="vehiculo_id"
+                                class="form-select"
+                                required>
+
+                                <option value="">Seleccione un vehículo</option>
+
+                                <?php foreach ($vehiculos as $v): ?>
+
+                                    <option
+                                        value="<?= htmlspecialchars($v["id_vehiculo"]) ?>"
+                                        <?= (($_POST["vehiculo_id"] ?? "") == $v["id_vehiculo"]) ? "selected" : "" ?>>
+
+                                        <?= htmlspecialchars($v["vehiculo"]) ?>
+
+                                    </option>
+
+                                <?php endforeach; ?>
+
+                            </select>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                <i class="bi bi-person-badge-fill"></i>
+                                Mecánico
+                            </label>
+
+                            <select
+                                name="mecanico_id"
+                                class="form-select"
+                                required>
+
+                                <option value="">Seleccione un mecánico</option>
+
+                                <?php foreach ($mecanicos as $m): ?>
+
+                                    <option
+                                        value="<?= htmlspecialchars($m["id_mecanico"]) ?>"
+                                        <?= (($_POST["mecanico_id"] ?? "") == $m["id_mecanico"]) ? "selected" : "" ?>>
+
+                                        <?= htmlspecialchars($m["nombre"]) ?>
+
+                                    </option>
+
+                                <?php endforeach; ?>
+
+                            </select>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                <i class="bi bi-calendar-event"></i>
+                                Fecha
+                            </label>
+
+                            <input
+                                type="date"
+                                name="fecha"
+                                class="form-control"
+                                value="<?= htmlspecialchars($_POST["fecha"] ?? date("Y-m-d")) ?>"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                <i class="bi bi-card-text"></i>
+                                Observaciones
+                            </label>
+
+                            <textarea
+                                name="observaciones"
+                                rows="4"
+                                class="form-control"><?= htmlspecialchars($_POST["observaciones"] ?? "") ?></textarea>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                <i class="bi bi-flag-fill"></i>
+                                Estado
+                            </label>
+
+                            <?php $estado = $_POST["estado"] ?? ""; ?>
+
+                            <select
+                                name="estado"
+                                class="form-select"
+                                required>
+
+                                <option value="">Seleccione un estado</option>
+
+                                <option value="pendiente" <?= $estado == "pendiente" ? "selected" : "" ?>>
+                                    Pendiente
+                                </option>
+
+                                <option value="en proceso" <?= $estado == "en proceso" ? "selected" : "" ?>>
+                                    En proceso
+                                </option>
+
+                                <option value="finalizado" <?= $estado == "finalizado" ? "selected" : "" ?>>
+                                    Finalizado
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+
+                            <a href="index.php?url=ordenes/listar"
+                               class="btn btn-secondary">
+
+                                <i class="bi bi-arrow-left"></i>
+                                Volver
+
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="btn btn-success">
+
+                                <i class="bi bi-save"></i>
+                                Guardar Orden
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <?php if (!empty($errores)): ?>
-        <div style="background:#fdecea; border:1px solid #f1416c; padding:15px; border-radius:8px; margin-bottom:20px; color:#f1416c;">
-            <ul style="margin:0; padding-left:20px;">
-                <?php foreach ($errores as $error): ?>
-                    <li><?php echo htmlspecialchars($error); ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
-
-    <form action="index.php?url=ordenes/crear" method="POST" id="formOrden" novalidate>
-
-        <label for="vehiculo_id">Vehículo</label>
-        <select name="vehiculo_id" id="vehiculo_id" required>
-            <option value="">-- Seleccione un vehículo --</option>
-            <?php foreach ($vehiculos as $v): ?>
-                <option value="<?php echo $v['id_vehiculo']; ?>"
-                    <?php echo (isset($_POST['vehiculo_id']) && $_POST['vehiculo_id'] == $v['id_vehiculo']) ? 'selected' : ''; ?>>
-                    <?php echo htmlspecialchars($v['placa'] . ' - ' . $v['modelo']); ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-
-        <label for="mecanico_id">Mecánico</label>
-        <select name="mecanico_id" id="mecanico_id" required>
-            <option value="">-- Seleccione un mecánico --</option>
-            <?php foreach ($mecanicos as $m): ?>
-                <option value="<?php echo $m['id_mecanico']; ?>"
-                    <?php echo (isset($_POST['mecanico_id']) && $_POST['mecanico_id'] == $m['id_mecanico']) ? 'selected' : ''; ?>>
-                    <?php echo htmlspecialchars($m['nombre']); ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-
-        <label for="fecha">Fecha</label>
-        <input type="date" name="fecha" id="fecha"
-               value="<?php echo htmlspecialchars($_POST['fecha'] ?? date('Y-m-d')); ?>" required>
-
-        <label for="observaciones">Observaciones</label>
-        <textarea name="observaciones" id="observaciones" rows="4"><?php echo htmlspecialchars($_POST['observaciones'] ?? ''); ?></textarea>
-
-        <label for="estado">Estado</label>
-        <?php $estadoActual = $_POST['estado'] ?? ''; ?>
-        <select name="estado" id="estado" required>
-            <option value="">-- Seleccione un estado --</option>
-            <option value="pendiente" <?php echo $estadoActual === 'pendiente' ? 'selected' : ''; ?>>Pendiente</option>
-            <option value="en proceso" <?php echo $estadoActual === 'en proceso' ? 'selected' : ''; ?>>En proceso</option>
-            <option value="finalizado" <?php echo $estadoActual === 'finalizado' ? 'selected' : ''; ?>>Finalizado</option>
-        </select>
-
-        <input type="submit" value="Guardar Orden">
-        <a href="index.php?url=ordenes/listar" class="btn-cancelar">Cancelar</a>
-    </form>
 </div>
 
-<script src="../../../public/js/ordenes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

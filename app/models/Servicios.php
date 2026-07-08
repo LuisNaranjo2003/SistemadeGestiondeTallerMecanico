@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/../config/conexion.php";
 
-class Servicio
+class Servicios
 {
     public static function obtenerTodos()
     {

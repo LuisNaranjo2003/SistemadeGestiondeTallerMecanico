@@ -1,3 +1,7 @@
+<?php
+$mecanico = $mecanico ?? null;
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,47 +9,163 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Mecánico</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
 </head>
 
-<body>
-    <h1>Editar Mecánico</h1>
+<body class="bg-light">
 
-    <?php if (!$mecanico): ?>
-        <p>
-            No existe el mecánico
-        </p>
+<div class="container mt-5">
 
-        <p>
-            <a href="index.php?url=mecanicos/listar">Volver</a>
-        </p>
-    <?php else: ?>
-        
-        <form method="POST" action="index.php?url=mecanicos/actualizar">
+    <div class="row justify-content-center">
 
-            <input type="hidden" name="id_mecanico" value="<?= $mecanico["id_mecanico"] ?>">
+        <div class="col-md-8">
 
-            <label>Nombres:</label><br>
-            <input type="text" name="nombres" value="<?= $mecanico["nombres"] ?>" required><br><br>
+            <div class="card shadow">
 
-            <label>Apellidos:</label><br>
-            <input type="text" name="apellidos" value="<?= $mecanico["apellidos"] ?>" required><br><br>
+                <div class="card-header bg-danger text-white">
 
-            <label>Especialidad:</label><br>
-            <input type="text" name="especialidad" value="<?= $mecanico["especialidad"] ?>" required><br><br>
+                    <h3 class="mb-0">
+                        <i class="bi bi-pencil-square"></i>
+                        Editar Mecánico
+                    </h3>
 
-            <label>Teléfono:</label><br>
-            <input type="text" name="telefono" value="<?= $mecanico["telefono"] ?>" required><br><br>
+                </div>
 
-            <label>Correo electrónico:</label><br>
-            <input type="email" name="correo" value="<?= $mecanico["correo"] ?>" required><br><br>
+                <div class="card-body">
 
-            <button type="submit">Actualizar</button>
+                    <?php if (!$mecanico): ?>
 
-        </form>
+                        <div class="alert alert-danger">
 
-        <p><a href="index.php?url=mecanicos/listar">Volver</a></p>
+                            El mecánico no existe.
 
-    <?php endif; ?>
+                        </div>
+
+                        <a href="index.php?url=mecanicos/listar"
+                           class="btn btn-secondary">
+
+                            <i class="bi bi-arrow-left"></i>
+                            Volver
+
+                        </a>
+
+                    <?php else: ?>
+
+                    <form method="POST"
+                          action="index.php?url=mecanicos/actualizar">
+
+                        <input
+                            type="hidden"
+                            name="id_mecanico"
+                            value="<?= htmlspecialchars($mecanico["id_mecanico"]) ?>">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">Nombres</label>
+
+                            <input
+                                type="text"
+                                name="nombres"
+                                class="form-control"
+                                value="<?= htmlspecialchars($mecanico["nombres"]) ?>"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">Apellidos</label>
+
+                            <input
+                                type="text"
+                                name="apellidos"
+                                class="form-control"
+                                value="<?= htmlspecialchars($mecanico["apellidos"]) ?>"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">Especialidad</label>
+
+                            <input
+                                type="text"
+                                name="especialidad"
+                                class="form-control"
+                                value="<?= htmlspecialchars($mecanico["especialidad"]) ?>"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">Teléfono</label>
+
+                            <input
+                                type="text"
+                                name="telefono"
+                                class="form-control"
+                                value="<?= htmlspecialchars($mecanico["telefono"]) ?>"
+                                maxlength="10"
+                                required>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label">Correo Electrónico</label>
+
+                            <input
+                                type="email"
+                                name="correo"
+                                class="form-control"
+                                value="<?= htmlspecialchars($mecanico["correo"]) ?>"
+                                required>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+
+                            <a href="index.php?url=mecanicos/listar"
+                               class="btn btn-secondary">
+
+                                <i class="bi bi-arrow-left"></i>
+                                Volver
+
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="btn btn-danger">
+
+                                <i class="bi bi-save"></i>
+                                Actualizar Mecánico
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                    <?php endif; ?>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>
