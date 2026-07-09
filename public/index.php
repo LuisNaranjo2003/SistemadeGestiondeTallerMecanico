@@ -93,6 +93,23 @@ if ($url == "") {
                 background-color: #f0faff;
             }
 
+            .card-citas {
+                border-top: 5px solid #0dcaf0;
+            }
+
+            .card-proveedores {
+                border-top: 5px solid #007bff;
+            }
+
+            /* Hover */
+            .card-citas:hover {
+                background-color: #f0faff;
+            }
+
+            .card-proveedores:hover {
+                background-color: #f0f7ff;
+            }
+
             .icono {
                 font-size: 55px;
                 transition: transform 0.3s ease;
