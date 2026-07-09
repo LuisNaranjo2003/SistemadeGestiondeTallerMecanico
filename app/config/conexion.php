@@ -1,7 +1,7 @@
 <?php
 
-class Conexion {
-
+class Conexion
+{
     public static function conectar()
     {
         $host = "localhost";

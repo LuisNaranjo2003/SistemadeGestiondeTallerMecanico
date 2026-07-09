@@ -206,6 +206,7 @@ if ($url == "") {
                     </div>
 
                 </div>
+                
                 <div class="col-md-5">
 
                     <div class="card card-menu shadow">
@@ -224,6 +225,37 @@ if ($url == "") {
 
                             <a href="index.php?url=ordenes/listar"
                                 class="btn btn-secondary">
+
+                                <i class="bi bi-arrow-right-circle"></i>
+
+                                Ingresar
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-5">
+
+                    <div class="card card-menu shadow">
+
+                        <div class="card-body text-center p-5">
+
+                            <i class="bi bi-calendar-check-fill text-info icono"></i>
+
+                            <h3 class="mt-3">
+                                Citas
+                            </h3>
+
+                            <p class="text-muted">
+                                Agendar y administrar citas del taller.
+                            </p>
+
+                            <a href="index.php?url=citas/listar"
+                                class="btn btn-info text-white">
 
                                 <i class="bi bi-arrow-right-circle"></i>
 
@@ -310,6 +342,7 @@ switch ($url) {
         require_once __DIR__ . "/../app/controllers/ClientesController.php";
         (new ClienteController())->eliminar();
         break;
+
     case "servicios/listar":
         require_once __DIR__ . "/../app/controllers/ServiciosController.php";
         (new ServicioController())->listar();
@@ -369,6 +402,7 @@ switch ($url) {
         require_once __DIR__ . "/../app/controllers/MecanicosController.php";
         (new MecanicoController())->eliminar();
         break;
+
     case "ordenes/listar":
         require_once __DIR__ . "/../app/controllers/OrdenesController.php";
         (new OrdenesController())->listar();
@@ -398,6 +432,37 @@ switch ($url) {
         require_once __DIR__ . "/../app/controllers/OrdenesController.php";
         (new OrdenesController())->eliminar();
         break;
+
+    case "citas/listar":
+        require_once __DIR__ . "/../app/controllers/CitasController.php";
+        (new CitasController())->listar();
+        break;
+
+    case "citas/crearForm":
+        require_once __DIR__ . "/../app/controllers/CitasController.php";
+        (new CitasController())->crearForm();
+        break;
+
+    case "citas/crear":
+        require_once __DIR__ . "/../app/controllers/CitasController.php";
+        (new CitasController())->crear();
+        break;
+
+    case "citas/editarForm":
+        require_once __DIR__ . "/../app/controllers/CitasController.php";
+        (new CitasController())->editarForm();
+        break;
+
+    case "citas/actualizar":
+        require_once __DIR__ . "/../app/controllers/CitasController.php";
+        (new CitasController())->actualizar();
+        break;
+
+    case "citas/eliminar":
+        require_once __DIR__ . "/../app/controllers/CitasController.php";
+        (new CitasController())->eliminar();
+        break;
+
     default:
 
         http_response_code(404);
