@@ -1,60 +1,125 @@
 <?php
 
-class Factura {
+require_once __DIR__ . "/../config/conexion.php";
 
-    /**
-     * Establece la conexión con la Base de Datos
-     */
-    private function conectar() {
-        // Ajusta el nombre de tu base de datos si no es 'taller_mecanico'
-        $conexion = new mysqli("localhost", "root", "", "taller_mecanico");
-        if ($conexion->connect_error) {
-            die("Error de conexión: " . $conexion->connect_error);
-        }
-        return $conexion;
-    }
+class Factura
+{
+    public static function obtenerTodas()
+    {
+        $conn = Conexion::conectar();
 
-    /**
-     * Inserta una nueva factura en la base de datos
-     */
-    public function crear($orden_id, $fecha, $subtotal, $iva, $total) {
-        $conexion = $this->conectar();
-        
-        // Se realiza el INSERT seguro con sentencias preparadas
-        $sql = "INSERT INTO facturas (orden_id, fecha, subtotal, iva, total) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conexion->prepare($sql);
-        
-        if ($stmt) {
-            $stmt->bind_param("isddd", $orden_id, $fecha, $subtotal, $iva, $total);
-            $resultado = $stmt->execute();
-            $stmt->close();
-            $conexion->close();
-            return $resultado;
-        }
-        
-        $conexion->close();
-        return false;
-    }
+        $sql = "SELECT
+                    id_factura,
+                    orden_id,
+                    fecha,
+                    subtotal,
+                    iva,
+                    total
+                FROM facturas
+                ORDER BY id_factura DESC";
 
-    /**
-     * AQUI  Trae todos los registros ordenados por id_factura
-     */
-    public function obtenerTodas() {
-        $conexion = $this->conectar();
-        
-        // Se cambió 'id' por 'id_factura' para que coincida con tu llave primaria
-        $sql = "SELECT * FROM facturas ORDER BY id_factura DESC"; 
-        
-        $resultado = $conexion->query($sql);
-        
+        $res = $conn->query($sql);
+
         $facturas = [];
-        if ($resultado && $resultado->num_rows > 0) {
-            while ($fila = $resultado->fetch_assoc()) {
-                $facturas[] = $fila;
-            }
+
+        while ($fila = $res->fetch_assoc()) {
+            $facturas[] = $fila;
         }
-        
-        $conexion->close();
+
         return $facturas;
+    }
+
+    public static function obtenerPorId($id)
+    {
+        $conn = Conexion::conectar();
+
+        $id = (int)$id;
+
+        $sql = "SELECT
+                    id_factura,
+                    orden_id,
+                    fecha,
+                    subtotal,
+                    iva,
+                    total
+                FROM facturas
+                WHERE id_factura=$id
+                LIMIT 1";
+
+        $res = $conn->query($sql);
+
+        return $res->fetch_assoc();
+    }
+
+    public static function crear($orden_id, $fecha, $subtotal, $iva, $total)
+    {
+        $conn = Conexion::conectar();
+
+        $orden_id = (int)$orden_id;
+        $fecha = $conn->real_escape_string($fecha);
+        $subtotal = (float)$subtotal;
+        $iva = (float)$iva;
+        $total = (float)$total;
+
+        $sql = "INSERT INTO facturas
+                (orden_id, fecha, subtotal, iva, total)
+                VALUES
+                ($orden_id,'$fecha',$subtotal,$iva,$total)";
+
+        return $conn->query($sql);
+    }
+
+    public static function actualizar($id, $orden_id, $fecha, $subtotal, $iva, $total)
+    {
+        $conn = Conexion::conectar();
+
+        $id = (int)$id;
+        $orden_id = (int)$orden_id;
+        $fecha = $conn->real_escape_string($fecha);
+        $subtotal = (float)$subtotal;
+        $iva = (float)$iva;
+        $total = (float)$total;
+
+        $sql = "UPDATE facturas SET
+                    orden_id=$orden_id,
+                    fecha='$fecha',
+                    subtotal=$subtotal,
+                    iva=$iva,
+                    total=$total
+                WHERE id_factura=$id";
+
+        return $conn->query($sql);
+    }
+
+    public static function eliminar($id)
+    {
+        $conn = Conexion::conectar();
+
+        $id = (int)$id;
+
+        $sql = "DELETE FROM facturas
+                WHERE id_factura=$id";
+
+        return $conn->query($sql);
+    }
+
+    public static function obtenerOrdenes()
+    {
+        $conn = Conexion::conectar();
+
+        $sql = "SELECT
+                id_orden
+            FROM ordenes
+            ORDER BY id_orden DESC";
+
+        $res = $conn->query($sql);
+
+        $ordenes = [];
+
+        while ($fila = $res->fetch_assoc()) {
+            $ordenes[] = $fila;
+        }
+
+        return $ordenes;
     }
 }

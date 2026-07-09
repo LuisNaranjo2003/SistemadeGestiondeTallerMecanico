@@ -1,115 +1,210 @@
+<?php
+$factura = $factura ?? null;
+$ordenes = $ordenes ?? [];
+?>
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Factura</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-            margin: 20px;
-        }
-        .form-container {
-            background-color: #ffffff;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        h2 {
-            color: #2196F3;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-        }
-        input[type="text"],
-        input[type="number"],
-        input[type="date"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .btn-submit {
-            background-color: #2196F3;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-        }
-        .btn-submit:hover {
-            background-color: #0b7dda;
-        }
-        .btn-cancel {
-            display: block;
-            text-align: center;
-            margin-top: 10px;
-            color: #f44336;
-            text-decoration: none;
-        }
-    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
 </head>
-<body>
 
-<div class="form-container">
-    <h2>✏️ Editar Factura N° <?= isset($factura['id_factura']) ? $factura['id_factura'] : ''; ?></h2>
-    
-    <form action="index.php?url=facturas/actualizar" method="POST">
-        
-        <input type="hidden" name="id" value="<?= isset($factura['id_factura']) ? $factura['id_factura'] : ''; ?>">
-        
-        <div class="form-group">
-            <label for="orden_id">ID de la Orden:</label>
-            <input type="number" id="orden_id" name="orden_id" required value="<?= isset($factura['orden_id']) ? $factura['orden_id'] : ''; ?>">
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-warning">
+
+                    <h3 class="mb-0">
+                        <i class="bi bi-pencil-square"></i>
+                        Editar Factura
+                    </h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <?php if (!$factura): ?>
+
+                        <div class="alert alert-danger">
+
+                            La factura no existe.
+
+                        </div>
+
+                        <a href="index.php?url=facturas/listar"
+                           class="btn btn-secondary">
+
+                            <i class="bi bi-arrow-left"></i>
+                            Volver
+
+                        </a>
+
+                    <?php else: ?>
+
+                    <form method="POST"
+                          action="index.php?url=facturas/actualizar">
+
+                        <input
+                            type="hidden"
+                            name="id_factura"
+                            value="<?= htmlspecialchars($factura["id_factura"]) ?>">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">Orden de Trabajo</label>
+
+                            <select
+                                name="orden_id"
+                                class="form-select"
+                                required>
+
+                                <?php foreach ($ordenes as $orden): ?>
+
+                                    <option
+                                        value="<?= htmlspecialchars($orden["id_orden"]) ?>"
+                                        <?= ($orden["id_orden"] == $factura["orden_id"]) ? "selected" : "" ?>>
+
+                                        Orden #<?= htmlspecialchars($orden["id_orden"]) ?>
+
+                                    </option>
+
+                                <?php endforeach; ?>
+
+                            </select>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">Fecha</label>
+
+                            <input
+                                type="date"
+                                name="fecha"
+                                class="form-control"
+                                value="<?= htmlspecialchars($factura["fecha"]) ?>"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">Subtotal</label>
+
+                            <input
+                                type="number"
+                                step="0.01"
+                                name="subtotal"
+                                id="subtotal"
+                                class="form-control"
+                                value="<?= htmlspecialchars($factura["subtotal"]) ?>"
+                                oninput="calcularValores()"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">IVA (15%)</label>
+
+                            <input
+                                type="number"
+                                step="0.01"
+                                name="iva"
+                                id="iva"
+                                class="form-control"
+                                value="<?= htmlspecialchars($factura["iva"]) ?>"
+                                readonly>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label">Total</label>
+
+                            <input
+                                type="number"
+                                step="0.01"
+                                name="total"
+                                id="total"
+                                class="form-control"
+                                value="<?= htmlspecialchars($factura["total"]) ?>"
+                                readonly>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+
+                            <a href="index.php?url=facturas/listar"
+                               class="btn btn-secondary">
+
+                                <i class="bi bi-arrow-left"></i>
+                                Volver
+
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="btn btn-warning">
+
+                                <i class="bi bi-save"></i>
+                                Actualizar Factura
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                    <?php endif; ?>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="form-group">
-            <label for="fecha">Fecha:</label>
-            <input type="date" id="fecha" name="fecha" required value="<?= isset($factura['fecha']) ? $factura['fecha'] : ''; ?>">
-        </div>
+    </div>
 
-        <div class="form-group">
-            <label for="subtotal">Subtotal:</label>
-            <input type="number" id="subtotal" name="subtotal" step="0.01" min="0" required value="<?= isset($factura['subtotal']) ? $factura['subtotal'] : ''; ?>" oninput="calcularTotal()">
-        </div>
-
-        <div class="form-group">
-            <label for="iva">IVA:</label>
-            <input type="number" id="iva" name="iva" step="0.01" min="0" required value="<?= isset($factura['iva']) ? $factura['iva'] : ''; ?>" oninput="calcularTotal()">
-        </div>
-
-        <div class="form-group">
-            <label for="total">Total:</label>
-            <input type="number" id="total" name="total" step="0.01" min="0" required value="<?= isset($factura['total']) ? $factura['total'] : ''; ?>" readonly>
-        </div>
-
-        <button type="submit" class="btn-submit">🔄 Actualizar Factura</button>
-        <a href="index.php?url=facturas/listar" class="btn-cancel">Cancelar</a>
-    </form>
 </div>
 
 <script>
-function calcularTotal() {
-    const subtotal = parseFloat(document.getElementById('subtotal').value) || 0;
-    const iva = parseFloat(document.getElementById('iva').value) || 0;
-    const total = subtotal + iva;
-    document.getElementById('total').value = total.toFixed(2);
+
+function calcularValores(){
+
+    let subtotal = parseFloat(document.getElementById("subtotal").value) || 0;
+
+    let iva = subtotal * 0.15;
+
+    let total = subtotal + iva;
+
+    document.getElementById("iva").value = iva.toFixed(2);
+
+    document.getElementById("total").value = total.toFixed(2);
+
 }
+
+window.onload = calcularValores;
+
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>
