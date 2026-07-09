@@ -118,6 +118,14 @@ if ($url == "") {
                 background-color: #fff4e6;
             }
 
+            .card-pagos {
+                border-top: 5px solid #198754;
+            }
+
+            .card-pagos:hover {
+                background-color: #f2f9f5;
+            }
+
             .icono {
                 font-size: 55px;
                 transition: transform 0.3s ease;
@@ -311,7 +319,31 @@ if ($url == "") {
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="card card-menu card-pagos shadow-sm">
+                        <div class="card-body text-center p-4">
 
+                            <i class="bi bi-cash-coin text-success icono"></i>
+
+                            <h4 class="mt-3 fw-bold text-dark">
+                                Pagos
+                            </h4>
+
+                            <p class="text-muted small">
+                                Registrar y administrar los pagos de las facturas.
+                            </p>
+
+                            <a href="index.php?url=pagos/listar"
+                                class="btn btn-success btn-custom w-100 mt-2">
+
+                                <i class="bi bi-arrow-right-circle me-1"></i>
+                                Ingresar
+
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
