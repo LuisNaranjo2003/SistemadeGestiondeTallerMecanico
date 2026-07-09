@@ -2,7 +2,8 @@
 
 require_once __DIR__ . "/../models/Clientes.php";
 
-class ClienteController
+// CORRECCIÓN: Nombre de la clase cambiado a plural para coincidir con el sistema
+class ClientesController
 {
     public function listar()
     {

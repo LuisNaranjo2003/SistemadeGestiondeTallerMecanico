@@ -100,4 +100,5 @@ class OrdenesController
         header("Location: index.php?url=ordenes/listar");
         exit;
     }
+    
 }

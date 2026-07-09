@@ -220,4 +220,24 @@ class Ordenes
 
         return $servicios;
     }
+
+    public static function obtenerTodos()
+    {
+        $conn = Conexion::conectar();
+
+        $sql = "SELECT id_orden, fecha
+                FROM ordenes
+                ORDER BY id_orden DESC";
+
+        $res = $conn->query($sql);
+
+        $ordenes = [];
+
+        while ($fila = $res->fetch_assoc()) {
+            $ordenes[] = $fila;
+        }
+
+        return $ordenes;
+    }
+
 }
