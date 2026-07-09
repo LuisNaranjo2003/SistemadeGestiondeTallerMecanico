@@ -21,13 +21,11 @@ if ($url == "") {
                 font-family: Arial, sans-serif;
             }
 
-            /* BARRA DE NAVEGACIÓN MODERNA EN AZUL */
             .navbar-custom {
                 background-color: #007bff;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             }
 
-            /* TARJETAS DEL MENÚ PRINCIPAL */
             .card-menu {
                 transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
                 border: none;
@@ -37,13 +35,11 @@ if ($url == "") {
                 overflow: hidden;
             }
 
-            /* Efecto de elevación al pasar el mouse */
             .card-menu:hover {
                 transform: translateY(-8px);
                 box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
             }
 
-            /* Bordes superiores temáticos dinámicos */
             .card-vehiculos {
                 border-top: 5px solid #007bff;
             }
@@ -68,7 +64,6 @@ if ($url == "") {
                 border-top: 5px solid #0dcaf0;
             }
 
-            /* Cambios sutiles de fondo en hover */
             .card-vehiculos:hover {
                 background-color: #f0f7ff;
             }
@@ -101,7 +96,6 @@ if ($url == "") {
                 border-top: 5px solid #007bff;
             }
 
-            /* Hover */
             .card-citas:hover {
                 background-color: #f0faff;
             }

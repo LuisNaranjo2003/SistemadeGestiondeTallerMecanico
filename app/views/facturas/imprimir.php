@@ -4,6 +4,8 @@ $factura = $factura ?? null;
 if (!$factura) {
     die("Factura no encontrada.");
 }
+$base = dirname($_SERVER['SCRIPT_NAME']);
+$logo = $base . "/img/logo.png";
 ?>
 
 <!DOCTYPE html>
@@ -100,9 +102,9 @@ if (!$factura) {
 
                 <div class="col-3">
 
-                    <img src="http://localhost/SistemadeGesti%C3%B3ndeTallerMec%C3%A1nico/public/img/logo.png"
-     class="logo"
-     alt="Logo">
+                    <img src="<?= $logo ?>"
+                        class="logo"
+                        alt="Logo">
 
                 </div>
 
