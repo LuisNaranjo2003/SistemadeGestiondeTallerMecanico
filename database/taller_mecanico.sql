@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-07-2026 a las 03:10:38
+-- Tiempo de generación: 09-07-2026 a las 08:33:25
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,22 +24,47 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `citas`
+--
+
+CREATE TABLE `citas` (
+  `id_cita` int(11) NOT NULL,
+  `cliente_id` int(11) NOT NULL,
+  `vehiculo_id` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `hora` time NOT NULL,
+  `estado` enum('Pendiente','Confirmada','Cancelada','Atendida') NOT NULL DEFAULT 'Pendiente'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `citas`
+--
+
+INSERT INTO `citas` (`id_cita`, `cliente_id`, `vehiculo_id`, `fecha`, `hora`, `estado`) VALUES
+(1, 1, 1, '2026-07-22', '04:29:00', 'Pendiente');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `clientes`
 --
 
-CREATE TABLE clientes (
-    id_cliente INT NOT NULL AUTO_INCREMENT,
-    nombres VARCHAR(100) NOT NULL,
-    apellidos VARCHAR(100) NOT NULL,
-    cedula VARCHAR(10) NOT NULL,
-    telefono VARCHAR(10) NOT NULL,
-    correo VARCHAR(100) NOT NULL,
-    direccion VARCHAR(200) NOT NULL,
-    PRIMARY KEY (id_cliente),
-    UNIQUE KEY (correo)
-) ENGINE=InnoDB
-DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_general_ci;
+CREATE TABLE `clientes` (
+  `id_cliente` int(11) NOT NULL,
+  `nombres` varchar(100) NOT NULL,
+  `apellidos` varchar(100) NOT NULL,
+  `cedula` varchar(10) NOT NULL,
+  `telefono` varchar(10) NOT NULL,
+  `correo` varchar(100) NOT NULL,
+  `direccion` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`id_cliente`, `nombres`, `apellidos`, `cedula`, `telefono`, `correo`, `direccion`) VALUES
+(1, 'qwdAWDa', 'daSDassd', '654616566', '65656556', 'sebastian@gmail.com', 'asdasdasdasd');
 
 -- --------------------------------------------------------
 
@@ -48,16 +73,13 @@ COLLATE=utf8mb4_general_ci;
 --
 
 CREATE TABLE `mecanicos` (
-  `id_mecanico` INT NOT NULL AUTO_INCREMENT,
-  `nombres` VARCHAR(100) NOT NULL,
-  `apellidos` VARCHAR(100) NOT NULL,
-  `especialidad` VARCHAR(100) NOT NULL,
-  `telefono` VARCHAR(10) NOT NULL,
-  `correo` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`id_mecanico`)
-) ENGINE=InnoDB
-DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_general_ci;
+  `id_mecanico` int(11) NOT NULL,
+  `nombres` varchar(100) NOT NULL,
+  `apellidos` varchar(100) NOT NULL,
+  `especialidad` varchar(100) NOT NULL,
+  `telefono` varchar(10) NOT NULL,
+  `correo` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -66,16 +88,13 @@ COLLATE=utf8mb4_general_ci;
 --
 
 CREATE TABLE `ordenes` (
-  `id_orden` INT NOT NULL AUTO_INCREMENT,
-  `vehiculo_id` INT NOT NULL,
-  `mecanico_id` INT NOT NULL,
-  `servicio_id` INT NOT NULL,
-  `fecha` DATE NOT NULL,
-  `observaciones` TEXT NOT NULL,
-  `estado` ENUM('Pendiente','En Proceso','Finalizado','Cancelado') NOT NULL,
-
-  PRIMARY KEY (`id_orden`)
-
+  `id_orden` int(11) NOT NULL,
+  `vehiculo_id` int(11) NOT NULL,
+  `mecanico_id` int(11) NOT NULL,
+  `servicio_id` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `observaciones` text NOT NULL,
+  `estado` enum('Pendiente','En Proceso','Finalizado','Cancelado') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -85,13 +104,10 @@ CREATE TABLE `ordenes` (
 --
 
 CREATE TABLE `servicios` (
-  `id_servicio` INT NOT NULL AUTO_INCREMENT,
-  `nombre_servicio` VARCHAR(100) NOT NULL,
-  `descripcion` TEXT NOT NULL,
-  `precio` DECIMAL(10,2) NOT NULL,
-
-  PRIMARY KEY (`id_servicio`)
-
+  `id_servicio` int(11) NOT NULL,
+  `nombre_servicio` varchar(100) NOT NULL,
+  `descripcion` text NOT NULL,
+  `precio` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -101,111 +117,120 @@ CREATE TABLE `servicios` (
 --
 
 CREATE TABLE `vehiculos` (
-  `id_vehiculo` INT NOT NULL AUTO_INCREMENT,
-  `placa` VARCHAR(10) NOT NULL,
-  `marca` VARCHAR(50) NOT NULL,
-  `modelo` VARCHAR(50) NOT NULL,
-  `anio` YEAR NOT NULL,
-  `color` VARCHAR(30) NOT NULL,
-  `cliente_id` INT NOT NULL,
-
-  PRIMARY KEY (`id_vehiculo`),
-  UNIQUE KEY `placa` (`placa`)
-
+  `id_vehiculo` int(11) NOT NULL,
+  `placa` varchar(10) NOT NULL,
+  `marca` varchar(50) NOT NULL,
+  `modelo` varchar(50) NOT NULL,
+  `anio` year(4) NOT NULL,
+  `color` varchar(30) NOT NULL,
+  `cliente_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE proveedores (
-    id_proveedor INT NOT NULL AUTO_INCREMENT,
-    empresa VARCHAR(100) NOT NULL,
-    telefono VARCHAR(10) NOT NULL,
-    correo VARCHAR(100) NOT NULL,
-    direccion VARCHAR(200) NOT NULL,
+--
+-- Volcado de datos para la tabla `vehiculos`
+--
 
-    PRIMARY KEY (id_proveedor)
-) ENGINE=InnoDB
-DEFAULT CHARSET=utf8mb4
+INSERT INTO `vehiculos` (`id_vehiculo`, `placa`, `marca`, `modelo`, `anio`, `color`, `cliente_id`) VALUES
+(1, 'DASFASFDAS', 'ddaDAS', 'sdaSDAS', '2026', 'asdasd', 1);
 
-COLLATE=utf8mb4_general_ci;
-CREATE TABLE citas (
-    id_cita INT NOT NULL AUTO_INCREMENT,
-    cliente_id INT NOT NULL,
-    vehiculo_id INT NOT NULL,
-    fecha DATE NOT NULL,
-    hora TIME NOT NULL,
-    estado ENUM('Pendiente','Confirmada','Cancelada','Atendida') NOT NULL,
+--
+-- Índices para tablas volcadas
+--
 
-    PRIMARY KEY (id_cita),
+--
+-- Indices de la tabla `citas`
+--
+ALTER TABLE `citas`
+  ADD PRIMARY KEY (`id_cita`),
+  ADD KEY `fk_citas_cliente` (`cliente_id`),
+  ADD KEY `fk_citas_vehiculo` (`vehiculo_id`);
 
-    CONSTRAINT fk_citas_cliente
-    FOREIGN KEY (cliente_id)
-    REFERENCES clientes(id_cliente)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+--
+-- Indices de la tabla `clientes`
+--
+ALTER TABLE `clientes`
+  ADD PRIMARY KEY (`id_cliente`),
+  ADD UNIQUE KEY `correo` (`correo`);
 
-    CONSTRAINT fk_citas_vehiculo
-    FOREIGN KEY (vehiculo_id)
-    REFERENCES vehiculos(id_vehiculo)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-) ENGINE=InnoDB
-DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_general_ci;
+--
+-- Indices de la tabla `mecanicos`
+--
+ALTER TABLE `mecanicos`
+  ADD PRIMARY KEY (`id_mecanico`);
 
-CREATE TABLE facturas (
-    id_factura INT NOT NULL AUTO_INCREMENT,
-    orden_id INT NOT NULL,
-    fecha DATE NOT NULL,
-    subtotal DECIMAL(10,2) NOT NULL,
-    iva DECIMAL(10,2) NOT NULL,
-    total DECIMAL(10,2) NOT NULL,
+--
+-- Indices de la tabla `ordenes`
+--
+ALTER TABLE `ordenes`
+  ADD PRIMARY KEY (`id_orden`),
+  ADD KEY `fk_ordenes_vehiculos` (`vehiculo_id`),
+  ADD KEY `fk_ordenes_mecanicos` (`mecanico_id`),
+  ADD KEY `fk_ordenes_servicios` (`servicio_id`);
 
-    PRIMARY KEY (id_factura),
+--
+-- Indices de la tabla `servicios`
+--
+ALTER TABLE `servicios`
+  ADD PRIMARY KEY (`id_servicio`);
 
-    CONSTRAINT fk_facturas_ordenes
-    FOREIGN KEY (orden_id)
-    REFERENCES ordenes(id_orden)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-) ENGINE=InnoDB
-DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_general_ci;
+--
+-- Indices de la tabla `vehiculos`
+--
+ALTER TABLE `vehiculos`
+  ADD PRIMARY KEY (`id_vehiculo`),
+  ADD UNIQUE KEY `placa` (`placa`),
+  ADD KEY `fk_cliente` (`cliente_id`);
 
-CREATE TABLE pagos (
-    id_pago INT NOT NULL AUTO_INCREMENT,
-    factura_id INT NOT NULL,
-    metodo_pago ENUM('Efectivo','Tarjeta','Transferencia') NOT NULL,
-    fecha_pago DATE NOT NULL,
-    estado ENUM('Pendiente','Pagado') NOT NULL,
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
 
-    PRIMARY KEY (id_pago),
+--
+-- AUTO_INCREMENT de la tabla `citas`
+--
+ALTER TABLE `citas`
+  MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
-    CONSTRAINT fk_pagos_facturas
-    FOREIGN KEY (factura_id)
-    REFERENCES facturas(id_factura)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-) ENGINE=InnoDB
-DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_general_ci;
+--
+-- AUTO_INCREMENT de la tabla `clientes`
+--
+ALTER TABLE `clientes`
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
-CREATE TABLE repuestos (
-    id_repuesto INT NOT NULL AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL,
-    marca VARCHAR(100) NOT NULL,
-    precio DECIMAL(10,2) NOT NULL,
-    stock INT NOT NULL,
-    proveedor_id INT NOT NULL,
+--
+-- AUTO_INCREMENT de la tabla `mecanicos`
+--
+ALTER TABLE `mecanicos`
+  MODIFY `id_mecanico` int(11) NOT NULL AUTO_INCREMENT;
 
-    PRIMARY KEY (id_repuesto),
+--
+-- AUTO_INCREMENT de la tabla `ordenes`
+--
+ALTER TABLE `ordenes`
+  MODIFY `id_orden` int(11) NOT NULL AUTO_INCREMENT;
 
-    CONSTRAINT fk_repuestos_proveedor
-    FOREIGN KEY (proveedor_id)
-    REFERENCES proveedores(id_proveedor)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-) ENGINE=InnoDB
-DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_general_ci;
+--
+-- AUTO_INCREMENT de la tabla `servicios`
+--
+ALTER TABLE `servicios`
+  MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `vehiculos`
+--
+ALTER TABLE `vehiculos`
+  MODIFY `id_vehiculo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `citas`
+--
+ALTER TABLE `citas`
+  ADD CONSTRAINT `fk_citas_cliente` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_citas_vehiculo` FOREIGN KEY (`vehiculo_id`) REFERENCES `vehiculos` (`id_vehiculo`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `ordenes`
@@ -225,4 +250,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
