@@ -280,8 +280,6 @@ if ($url == "") {
             </div>
 
         </div>
-        </div>
-
     </body>
 
     </html>
