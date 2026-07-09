@@ -44,20 +44,54 @@ if ($url == "") {
             }
 
             /* Bordes superiores temáticos dinámicos */
-            .card-vehiculos { border-top: 5px solid #007bff; }
-            .card-clientes { border-top: 5px solid #198754; }
-            .card-servicios { border-top: 5px solid #ffc107; }
-            .card-mecanicos { border-top: 5px solid #dc3545; }
-            .card-ordenes { border-top: 5px solid #6c757d; }
-            .card-facturas { border-top: 5px solid #0dcaf0; }
+            .card-vehiculos {
+                border-top: 5px solid #007bff;
+            }
+
+            .card-clientes {
+                border-top: 5px solid #198754;
+            }
+
+            .card-servicios {
+                border-top: 5px solid #ffc107;
+            }
+
+            .card-mecanicos {
+                border-top: 5px solid #dc3545;
+            }
+
+            .card-ordenes {
+                border-top: 5px solid #6c757d;
+            }
+
+            .card-facturas {
+                border-top: 5px solid #0dcaf0;
+            }
 
             /* Cambios sutiles de fondo en hover */
-            .card-vehiculos:hover { background-color: #f0f7ff; }
-            .card-clientes:hover { background-color: #f2f9f5; }
-            .card-servicios:hover { background-color: #fffdf5; }
-            .card-mecanicos:hover { background-color: #fff5f5; }
-            .card-ordenes:hover { background-color: #f8f9fa; }
-            .card-facturas:hover { background-color: #f0faff; }
+            .card-vehiculos:hover {
+                background-color: #f0f7ff;
+            }
+
+            .card-clientes:hover {
+                background-color: #f2f9f5;
+            }
+
+            .card-servicios:hover {
+                background-color: #fffdf5;
+            }
+
+            .card-mecanicos:hover {
+                background-color: #fff5f5;
+            }
+
+            .card-ordenes:hover {
+                background-color: #f8f9fa;
+            }
+
+            .card-facturas:hover {
+                background-color: #f0faff;
+            }
 
             .icono {
                 font-size: 55px;
@@ -205,6 +239,36 @@ if ($url == "") {
                     </div>
 
                 </div>
+                <div class="col-md-5">
+
+                    <div class="card card-menu shadow">
+
+                        <div class="card-body text-center p-5">
+
+                            <i class="bi bi-truck text-dark icono"></i>
+
+                            <h3 class="mt-3">
+                                Proveedores
+                            </h3>
+
+                            <p class="text-muted">
+                                Administrar los proveedores del taller.
+                            </p>
+
+                            <a href="index.php?url=proveedores/listar"
+                                class="btn btn-dark">
+
+                                <i class="bi bi-arrow-right-circle"></i>
+
+                                Ingresar
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
         </div>
@@ -221,15 +285,15 @@ if ($url == "") {
 // =========================================================================
 
 $partes = explode('/', rtrim($url, '/'));
-$modulo = $partes[0]; 
-$accion = $partes[1] ?? 'listar'; 
+$modulo = $partes[0];
+$accion = $partes[1] ?? 'listar';
 
-$controladorPlural = ucfirst($modulo) . "Controller";   
+$controladorPlural = ucfirst($modulo) . "Controller";
 $controladorSingular = $modulo;
 if (substr($modulo, -1) === 's') {
-    $controladorSingular = substr($modulo, 0, -1); 
+    $controladorSingular = substr($modulo, 0, -1);
 }
-$controladorSingular = ucfirst($controladorSingular) . "Controller"; 
+$controladorSingular = ucfirst($controladorSingular) . "Controller";
 
 $rutaArchivo = __DIR__ . "/../app/controllers/" . $controladorPlural . ".php";
 if (!file_exists($rutaArchivo)) {
@@ -238,7 +302,7 @@ if (!file_exists($rutaArchivo)) {
 
 if (file_exists($rutaArchivo)) {
     require_once $rutaArchivo;
-    
+
     $claseFinal = "";
     if (class_exists($controladorPlural)) {
         $claseFinal = $controladorPlural;
@@ -257,7 +321,8 @@ if (file_exists($rutaArchivo)) {
     mostrarError404("No se encontró el archivo del controlador para el módulo '$modulo'. <br><small class='text-muted'>Ruta buscada: $rutaArchivo</small>");
 }
 
-function mostrarError404($mensaje = "Ruta no encontrada") {
+function mostrarError404($mensaje = "Ruta no encontrada")
+{
     http_response_code(404);
     echo "<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css' rel='stylesheet'>";
     echo "<div class='container text-center mt-5'>";

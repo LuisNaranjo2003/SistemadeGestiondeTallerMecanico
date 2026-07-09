@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/../models/Proveedores.php";
 
-class ProveedorController
+class ProveedoresController
 {
     public function listar()
     {
