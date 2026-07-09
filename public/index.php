@@ -226,68 +226,60 @@ if ($url == "") {
                     </div>
                 </div>
 
-                <div class="col-md-5">
-
-                    <div class="card card-menu shadow">
-
-                        <div class="card-body text-center p-5">
+                <div class="col-md-4">
+                    <div class="card card-menu card-citas shadow-sm">
+                        <div class="card-body text-center p-4">
 
                             <i class="bi bi-calendar-check-fill text-info icono"></i>
 
-                            <h3 class="mt-3">
+                            <h4 class="mt-3 fw-bold text-dark">
                                 Citas
-                            </h3>
+                            </h4>
 
-                            <p class="text-muted">
+                            <p class="text-muted small">
                                 Agendar y administrar citas del taller.
                             </p>
 
                             <a href="index.php?url=citas/listar"
-                                class="btn btn-info text-white">
+                                class="btn btn-info text-white btn-custom w-100 mt-2">
 
-                                <i class="bi bi-arrow-right-circle"></i>
-
+                                <i class="bi bi-arrow-right-circle me-1"></i>
                                 Ingresar
 
                             </a>
 
                         </div>
-
                     </div>
-
-                </div>
-                <div class="col-md-5">
-
-                    <div class="card card-menu shadow">
-
-                        <div class="card-body text-center p-5">
-
-                            <i class="bi bi-truck text-dark icono"></i>
-
-                            <h3 class="mt-3">
-                                Proveedores
-                            </h3>
-
-                            <p class="text-muted">
-                                Administrar los proveedores del taller.
-                            </p>
-
-                            <a href="index.php?url=proveedores/listar"
-                                class="btn btn-dark">
-
-                                <i class="bi bi-arrow-right-circle"></i>
-
-                                Ingresar
-
-                            </a>
-
-                        </div>
-
-                    </div>
-
                 </div>
 
             </div>
+            <div class="col-md-4">
+                <div class="card card-menu card-proveedores shadow-sm">
+                    <div class="card-body text-center p-4">
+
+                        <i class="bi bi-truck text-primary icono"></i>
+
+                        <h4 class="mt-3 fw-bold text-dark">
+                            Proveedores
+                        </h4>
+
+                        <p class="text-muted small">
+                            Administrar los proveedores del taller.
+                        </p>
+
+                        <a href="index.php?url=proveedores/listar"
+                            class="btn btn-primary btn-custom w-100 mt-2">
+
+                            <i class="bi bi-arrow-right-circle me-1"></i>
+                            Ingresar
+
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
         </div>
 
     </body>
