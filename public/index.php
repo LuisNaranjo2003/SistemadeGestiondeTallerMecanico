@@ -148,6 +148,15 @@ if ($url == "") {
                         </div>
                     </div>
                 </div>
+<<<<<<< HEAD
+=======
+                
+                <div class="col-md-5">
+
+                    <div class="card card-menu shadow">
+
+                        <div class="card-body text-center p-5">
+>>>>>>> 695394b654a2c4ded96e6dbe0e753e7428b7eb02
 
                 <div class="col-md-4">
                     <div class="card card-menu card-ordenes shadow-sm">
@@ -175,6 +184,37 @@ if ($url == "") {
                     </div>
                 </div>
 
+                <div class="col-md-5">
+
+                    <div class="card card-menu shadow">
+
+                        <div class="card-body text-center p-5">
+
+                            <i class="bi bi-calendar-check-fill text-info icono"></i>
+
+                            <h3 class="mt-3">
+                                Citas
+                            </h3>
+
+                            <p class="text-muted">
+                                Agendar y administrar citas del taller.
+                            </p>
+
+                            <a href="index.php?url=citas/listar"
+                                class="btn btn-info text-white">
+
+                                <i class="bi bi-arrow-right-circle"></i>
+
+                                Ingresar
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
         </div>
 
@@ -193,6 +233,7 @@ $partes = explode('/', rtrim($url, '/'));
 $modulo = $partes[0]; 
 $accion = $partes[1] ?? 'listar'; 
 
+<<<<<<< HEAD
 $controladorPlural = ucfirst($modulo) . "Controller";   
 $controladorSingular = $modulo;
 if (substr($modulo, -1) === 's') {
@@ -235,4 +276,186 @@ function mostrarError404($mensaje = "Ruta no encontrada") {
     echo "<a href='index.php' class='btn btn-dark mt-3'>Volver al Inicio</a>";
     echo "</div>";
     exit;
+=======
+    case "vehiculos/crearForm":
+        require_once __DIR__ . "/../app/controllers/VehiculosController.php";
+        (new VehiculoController())->crearForm();
+        break;
+
+    case "vehiculos/crear":
+        require_once __DIR__ . "/../app/controllers/VehiculosController.php";
+        (new VehiculoController())->crear();
+        break;
+
+    case "vehiculos/editarForm":
+        require_once __DIR__ . "/../app/controllers/VehiculosController.php";
+        (new VehiculoController())->editarForm();
+        break;
+
+    case "vehiculos/actualizar":
+        require_once __DIR__ . "/../app/controllers/VehiculosController.php";
+        (new VehiculoController())->actualizar();
+        break;
+
+    case "vehiculos/eliminar":
+        require_once __DIR__ . "/../app/controllers/VehiculosController.php";
+        (new VehiculoController())->eliminar();
+        break;
+
+    case "clientes/listar":
+        require_once __DIR__ . "/../app/controllers/ClientesController.php";
+        (new ClienteController())->listar();
+        break;
+
+    case "clientes/crearForm":
+        require_once __DIR__ . "/../app/controllers/ClientesController.php";
+        (new ClienteController())->crearForm();
+        break;
+
+    case "clientes/crear":
+        require_once __DIR__ . "/../app/controllers/ClientesController.php";
+        (new ClienteController())->crear();
+        break;
+
+    case "clientes/editarForm":
+        require_once __DIR__ . "/../app/controllers/ClientesController.php";
+        (new ClienteController())->editarForm();
+        break;
+
+    case "clientes/actualizar":
+        require_once __DIR__ . "/../app/controllers/ClientesController.php";
+        (new ClienteController())->actualizar();
+        break;
+
+    case "clientes/eliminar":
+        require_once __DIR__ . "/../app/controllers/ClientesController.php";
+        (new ClienteController())->eliminar();
+        break;
+
+    case "servicios/listar":
+        require_once __DIR__ . "/../app/controllers/ServiciosController.php";
+        (new ServicioController())->listar();
+        break;
+
+    case "servicios/crearForm":
+        require_once __DIR__ . "/../app/controllers/ServiciosController.php";
+        (new ServicioController())->crearForm();
+        break;
+
+    case "servicios/crear":
+        require_once __DIR__ . "/../app/controllers/ServiciosController.php";
+        (new ServicioController())->crear();
+        break;
+
+    case "servicios/editarForm":
+        require_once __DIR__ . "/../app/controllers/ServiciosController.php";
+        (new ServicioController())->editarForm();
+        break;
+
+    case "servicios/actualizar":
+        require_once __DIR__ . "/../app/controllers/ServiciosController.php";
+        (new ServicioController())->actualizar();
+        break;
+
+    case "servicios/eliminar":
+        require_once __DIR__ . "/../app/controllers/ServiciosController.php";
+        (new ServicioController())->eliminar();
+        break;
+
+    case "mecanicos/listar":
+        require_once __DIR__ . "/../app/controllers/MecanicosController.php";
+        (new MecanicoController())->listar();
+        break;
+
+    case "mecanicos/crearForm":
+        require_once __DIR__ . "/../app/controllers/MecanicosController.php";
+        (new MecanicoController())->crearForm();
+        break;
+
+    case "mecanicos/crear":
+        require_once __DIR__ . "/../app/controllers/MecanicosController.php";
+        (new MecanicoController())->crear();
+        break;
+
+    case "mecanicos/editarForm":
+        require_once __DIR__ . "/../app/controllers/MecanicosController.php";
+        (new MecanicoController())->editarForm();
+        break;
+
+    case "mecanicos/actualizar":
+        require_once __DIR__ . "/../app/controllers/MecanicosController.php";
+        (new MecanicoController())->actualizar();
+        break;
+
+    case "mecanicos/eliminar":
+        require_once __DIR__ . "/../app/controllers/MecanicosController.php";
+        (new MecanicoController())->eliminar();
+        break;
+
+    case "ordenes/listar":
+        require_once __DIR__ . "/../app/controllers/OrdenesController.php";
+        (new OrdenesController())->listar();
+        break;
+
+    case "ordenes/crearForm":
+        require_once __DIR__ . "/../app/controllers/OrdenesController.php";
+        (new OrdenesController())->crearForm();
+        break;
+
+    case "ordenes/crear":
+        require_once __DIR__ . "/../app/controllers/OrdenesController.php";
+        (new OrdenesController())->crear();
+        break;
+
+    case "ordenes/editarForm":
+        require_once __DIR__ . "/../app/controllers/OrdenesController.php";
+        (new OrdenesController())->editarForm();
+        break;
+
+    case "ordenes/actualizar":
+        require_once __DIR__ . "/../app/controllers/OrdenesController.php";
+        (new OrdenesController())->actualizar();
+        break;
+
+    case "ordenes/eliminar":
+        require_once __DIR__ . "/../app/controllers/OrdenesController.php";
+        (new OrdenesController())->eliminar();
+        break;
+
+    case "citas/listar":
+        require_once __DIR__ . "/../app/controllers/CitasController.php";
+        (new CitasController())->listar();
+        break;
+
+    case "citas/crearForm":
+        require_once __DIR__ . "/../app/controllers/CitasController.php";
+        (new CitasController())->crearForm();
+        break;
+
+    case "citas/crear":
+        require_once __DIR__ . "/../app/controllers/CitasController.php";
+        (new CitasController())->crear();
+        break;
+
+    case "citas/editarForm":
+        require_once __DIR__ . "/../app/controllers/CitasController.php";
+        (new CitasController())->editarForm();
+        break;
+
+    case "citas/actualizar":
+        require_once __DIR__ . "/../app/controllers/CitasController.php";
+        (new CitasController())->actualizar();
+        break;
+
+    case "citas/eliminar":
+        require_once __DIR__ . "/../app/controllers/CitasController.php";
+        (new CitasController())->eliminar();
+        break;
+
+    default:
+
+        http_response_code(404);
+
+        echo "<h2 class='text-center mt-5'>404 - Ruta no encontrada</h2>";
+>>>>>>> 695394b654a2c4ded96e6dbe0e753e7428b7eb02
 }
