@@ -252,35 +252,35 @@ if ($url == "") {
                     </div>
                 </div>
 
-            </div>
-            <div class="col-md-4">
-                <div class="card card-menu card-proveedores shadow-sm">
-                    <div class="card-body text-center p-4">
+                <div class="col-md-4">
+                    <div class="card card-menu card-proveedores shadow-sm">
+                        <div class="card-body text-center p-4">
 
-                        <i class="bi bi-truck text-primary icono"></i>
+                            <i class="bi bi-truck text-primary icono"></i>
 
-                        <h4 class="mt-3 fw-bold text-dark">
-                            Proveedores
-                        </h4>
+                            <h4 class="mt-3 fw-bold text-dark">
+                                Proveedores
+                            </h4>
 
-                        <p class="text-muted small">
-                            Administrar los proveedores del taller.
-                        </p>
+                            <p class="text-muted small">
+                                Administrar los proveedores del taller.
+                            </p>
 
-                        <a href="index.php?url=proveedores/listar"
-                            class="btn btn-primary btn-custom w-100 mt-2">
+                            <a href="index.php?url=proveedores/listar"
+                                class="btn btn-primary btn-custom w-100 mt-2">
 
-                            <i class="bi bi-arrow-right-circle me-1"></i>
-                            Ingresar
+                                <i class="bi bi-arrow-right-circle me-1"></i>
+                                Ingresar
 
-                        </a>
+                            </a>
 
+                        </div>
                     </div>
                 </div>
-            </div>
+
+            </div> 
 
         </div>
-    </body>
 
     </html>
 <?php
