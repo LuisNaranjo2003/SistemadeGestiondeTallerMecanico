@@ -57,44 +57,119 @@ class Clientes
     {
         $conn = Conexion::conectar();
 
-        $nombres = $conn->real_escape_string($nombres);
-        $apellidos = $conn->real_escape_string($apellidos);
-        $cedula = $conn->real_escape_string($cedula);
-        $telefono = $conn->real_escape_string($telefono);
-        $correo = $conn->real_escape_string($correo);
-        $direccion = $conn->real_escape_string($direccion);
+        // Verificar correo
+        $stmt = $conn->prepare("SELECT id_cliente FROM clientes WHERE correo = ?");
+        $stmt->bind_param("s", $correo);
+        $stmt->execute();
 
-        $sql = "INSERT INTO clientes
-                (nombres, apellidos, cedula, telefono, correo, direccion)
-                VALUES
-                ('$nombres','$apellidos','$cedula','$telefono','$correo','$direccion')";
+        if ($stmt->get_result()->num_rows > 0) {
+            $stmt->close();
+            return "correo";
+        }
 
-        return $conn->query($sql);
+        $stmt->close();
+
+        // Verificar cédula
+        $stmt = $conn->prepare("SELECT id_cliente FROM clientes WHERE cedula = ?");
+        $stmt->bind_param("s", $cedula);
+        $stmt->execute();
+
+        if ($stmt->get_result()->num_rows > 0) {
+            $stmt->close();
+            return "cedula";
+        }
+
+        $stmt->close();
+
+        // Insertar
+        $stmt = $conn->prepare("
+        INSERT INTO clientes
+        (nombres, apellidos, cedula, telefono, correo, direccion)
+        VALUES (?, ?, ?, ?, ?, ?)
+    ");
+
+        $stmt->bind_param(
+            "ssssss",
+            $nombres,
+            $apellidos,
+            $cedula,
+            $telefono,
+            $correo,
+            $direccion
+        );
+
+        $resultado = $stmt->execute();
+        $stmt->close();
+
+        return $resultado;
     }
-
     public static function actualizar($id, $nombres, $apellidos, $cedula, $telefono, $correo, $direccion)
     {
         $conn = Conexion::conectar();
 
-        $id = (int)$id;
+        // Verificar si la cédula pertenece a otro cliente
+        $stmt = $conn->prepare("
+        SELECT id_cliente
+        FROM clientes
+        WHERE cedula = ?
+        AND id_cliente <> ?
+    ");
 
-        $nombres = $conn->real_escape_string($nombres);
-        $apellidos = $conn->real_escape_string($apellidos);
-        $cedula = $conn->real_escape_string($cedula);
-        $telefono = $conn->real_escape_string($telefono);
-        $correo = $conn->real_escape_string($correo);
-        $direccion = $conn->real_escape_string($direccion);
+        $stmt->bind_param("si", $cedula, $id);
+        $stmt->execute();
 
-        $sql = "UPDATE clientes SET
-                    nombres='$nombres',
-                    apellidos='$apellidos',
-                    cedula='$cedula',
-                    telefono='$telefono',
-                    correo='$correo',
-                    direccion='$direccion'
-                WHERE id_cliente=$id";
+        if ($stmt->get_result()->num_rows > 0) {
+            $stmt->close();
+            return "cedula";
+        }
 
-        return $conn->query($sql);
+        $stmt->close();
+
+        // Verificar si el correo pertenece a otro cliente
+        $stmt = $conn->prepare("
+        SELECT id_cliente
+        FROM clientes
+        WHERE correo = ?
+        AND id_cliente <> ?
+    ");
+
+        $stmt->bind_param("si", $correo, $id);
+        $stmt->execute();
+
+        if ($stmt->get_result()->num_rows > 0) {
+            $stmt->close();
+            return "correo";
+        }
+
+        $stmt->close();
+
+        // Actualizar cliente
+        $stmt = $conn->prepare("
+        UPDATE clientes
+        SET nombres = ?,
+            apellidos = ?,
+            cedula = ?,
+            telefono = ?,
+            correo = ?,
+            direccion = ?
+        WHERE id_cliente = ?
+    ");
+
+        $stmt->bind_param(
+            "ssssssi",
+            $nombres,
+            $apellidos,
+            $cedula,
+            $telefono,
+            $correo,
+            $direccion,
+            $id
+        );
+
+        $resultado = $stmt->execute();
+        $stmt->close();
+
+        return $resultado;
     }
 
     public static function eliminar($id)

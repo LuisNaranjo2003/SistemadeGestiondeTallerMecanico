@@ -8,7 +8,6 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-
 </head>
 
 <body class="bg-light">
@@ -32,6 +31,28 @@
 
                 <div class="card-body">
 
+                    <?php if(isset($_GET["error"])): ?>
+
+                        <?php if($_GET["error"] == "correo"): ?>
+
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                El correo electrónico ya se encuentra registrado.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+
+                        <?php elseif($_GET["error"] == "cedula"): ?>
+
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                La cédula ya se encuentra registrada.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+
+                        <?php endif; ?>
+
+                    <?php endif; ?>
+
                     <form method="POST" action="index.php?url=clientes/crear">
 
                         <div class="mb-3">
@@ -43,6 +64,7 @@
                                 name="nombres"
                                 class="form-control"
                                 placeholder="Ingrese los nombres"
+                                value="<?= htmlspecialchars($_POST['nombres'] ?? '') ?>"
                                 required>
 
                         </div>
@@ -56,6 +78,7 @@
                                 name="apellidos"
                                 class="form-control"
                                 placeholder="Ingrese los apellidos"
+                                value="<?= htmlspecialchars($_POST['apellidos'] ?? '') ?>"
                                 required>
 
                         </div>
@@ -70,6 +93,7 @@
                                 class="form-control"
                                 placeholder="095xxxxxxxx"
                                 maxlength="10"
+                                value="<?= htmlspecialchars($_POST['cedula'] ?? '') ?>"
                                 required>
 
                         </div>
@@ -84,6 +108,7 @@
                                 class="form-control"
                                 placeholder="09xxxxxxxx"
                                 maxlength="10"
+                                value="<?= htmlspecialchars($_POST['telefono'] ?? '') ?>"
                                 required>
 
                         </div>
@@ -97,6 +122,7 @@
                                 name="correo"
                                 class="form-control"
                                 placeholder="correo@ejemplo.com"
+                                value="<?= htmlspecialchars($_POST['correo'] ?? '') ?>"
                                 required>
 
                         </div>
@@ -110,7 +136,7 @@
                                 class="form-control"
                                 rows="3"
                                 placeholder="Ingrese la dirección"
-                                required></textarea>
+                                required><?= htmlspecialchars($_POST['direccion'] ?? '') ?></textarea>
 
                         </div>
 

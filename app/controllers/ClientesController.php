@@ -2,7 +2,6 @@
 
 require_once __DIR__ . "/../models/Clientes.php";
 
-// CORRECCIÓN: Nombre de la clase cambiado a plural para coincidir con el sistema
 class ClientesController
 {
     public function listar()
@@ -18,14 +17,14 @@ class ClientesController
 
     public function crear()
     {
-        $nombres   = $_POST["nombres"] ?? "";
-        $apellidos = $_POST["apellidos"] ?? "";
-        $cedula    = $_POST["cedula"] ?? "";
-        $telefono  = $_POST["telefono"] ?? "";
-        $correo    = $_POST["correo"] ?? "";
-        $direccion = $_POST["direccion"] ?? "";
+        $nombres   = trim($_POST["nombres"] ?? "");
+        $apellidos = trim($_POST["apellidos"] ?? "");
+        $cedula    = trim($_POST["cedula"] ?? "");
+        $telefono  = trim($_POST["telefono"] ?? "");
+        $correo    = trim($_POST["correo"] ?? "");
+        $direccion = trim($_POST["direccion"] ?? "");
 
-        Clientes::crear(
+        $resultado = Clientes::crear(
             $nombres,
             $apellidos,
             $cedula,
@@ -33,6 +32,16 @@ class ClientesController
             $correo,
             $direccion
         );
+
+        if ($resultado === "correo") {
+            header("Location: index.php?url=clientes/crearForm&error=correo");
+            exit;
+        }
+
+        if ($resultado === "cedula") {
+            header("Location: index.php?url=clientes/crearForm&error=cedula");
+            exit;
+        }
 
         header("Location: index.php?url=clientes/listar");
         exit;
@@ -44,20 +53,25 @@ class ClientesController
 
         $cliente = Clientes::obtenerPorId($id);
 
+        if (!$cliente) {
+            header("Location: index.php?url=clientes/listar");
+            exit;
+        }
+
         require __DIR__ . "/../views/clientes/editar.php";
     }
 
     public function actualizar()
     {
         $id        = $_POST["id_cliente"] ?? 0;
-        $nombres   = $_POST["nombres"] ?? "";
-        $apellidos = $_POST["apellidos"] ?? "";
-        $cedula    = $_POST["cedula"] ?? "";
-        $telefono  = $_POST["telefono"] ?? "";
-        $correo    = $_POST["correo"] ?? "";
-        $direccion = $_POST["direccion"] ?? "";
+        $nombres   = trim($_POST["nombres"] ?? "");
+        $apellidos = trim($_POST["apellidos"] ?? "");
+        $cedula    = trim($_POST["cedula"] ?? "");
+        $telefono  = trim($_POST["telefono"] ?? "");
+        $correo    = trim($_POST["correo"] ?? "");
+        $direccion = trim($_POST["direccion"] ?? "");
 
-        Clientes::actualizar(
+        $resultado = Clientes::actualizar(
             $id,
             $nombres,
             $apellidos,
@@ -66,6 +80,16 @@ class ClientesController
             $correo,
             $direccion
         );
+
+        if ($resultado === "correo") {
+            header("Location: index.php?url=clientes/editarForm&id=$id&error=correo");
+            exit;
+        }
+
+        if ($resultado === "cedula") {
+            header("Location: index.php?url=clientes/editarForm&id=$id&error=cedula");
+            exit;
+        }
 
         header("Location: index.php?url=clientes/listar");
         exit;
