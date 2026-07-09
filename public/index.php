@@ -110,6 +110,14 @@ if ($url == "") {
                 background-color: #f0f7ff;
             }
 
+            .card-repuestos {
+                border-top: 5px solid #fd7e14;
+            }
+
+            .card-repuestos:hover {
+                background-color: #fff4e6;
+            }
+
             .icono {
                 font-size: 55px;
                 transition: transform 0.3s ease;
@@ -268,6 +276,32 @@ if ($url == "") {
 
                             <a href="index.php?url=proveedores/listar"
                                 class="btn btn-primary btn-custom w-100 mt-2">
+
+                                <i class="bi bi-arrow-right-circle me-1"></i>
+                                Ingresar
+
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card card-menu card-repuestos shadow-sm">
+                        <div class="card-body text-center p-4">
+
+                            <i class="bi bi-box-seam-fill text-warning icono"></i>
+
+                            <h4 class="mt-3 fw-bold text-dark">
+                                Repuestos
+                            </h4>
+
+                            <p class="text-muted small">
+                                Administrar el inventario de repuestos del taller.
+                            </p>
+
+                            <a href="index.php?url=repuestos/listar"
+                                class="btn btn-warning text-white btn-custom w-100 mt-2">
 
                                 <i class="bi bi-arrow-right-circle me-1"></i>
                                 Ingresar
