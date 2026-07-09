@@ -278,18 +278,18 @@ if ($url == "") {
                     </div>
                 </div>
 
-            </div> 
+            </div>
 
         </div>
+
+    </body>
 
     </html>
 <?php
     exit;
 }
 
-// =========================================================================
-// ENRUTADOR DINÁMICO ULTRA INTELIGENTE (AUTO-DETECTA CLASES SINGULAR/PLURAL)
-// =========================================================================
+
 
 $partes = explode('/', rtrim($url, '/'));
 $modulo = $partes[0];
