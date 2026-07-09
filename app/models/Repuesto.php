@@ -10,7 +10,7 @@ class Repuesto
 
         $sql = "SELECT
                     r.*,
-                    p.nombre AS proveedor
+                    p.nombre_empresa AS proveedor
                 FROM repuestos r
                 INNER JOIN proveedores p
                     ON r.proveedor_id = p.id_proveedor
@@ -36,9 +36,11 @@ class Repuesto
     {
         $conn = Conexion::conectar();
 
-        $sql = "SELECT id_proveedor, nombre
+        $sql = "SELECT
+                    id_proveedor,
+                    nombre_empresa
                 FROM proveedores
-                ORDER BY nombre";
+                ORDER BY nombre_empresa";
 
         $resultado = $conn->query($sql);
 
