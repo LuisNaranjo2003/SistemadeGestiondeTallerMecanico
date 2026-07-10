@@ -4,8 +4,7 @@ $factura = $factura ?? null;
 if (!$factura) {
     die("Factura no encontrada.");
 }
-$base = dirname($_SERVER['SCRIPT_NAME']);
-$logo = $base . "/img/logo.png";
+$logo = "/img/logo.png";
 ?>
 
 <!DOCTYPE html>
