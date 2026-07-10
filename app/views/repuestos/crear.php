@@ -30,7 +30,9 @@ $proveedores = $proveedores ?? [];
 
                 <form action="index.php?url=repuestos/crear" method="POST">
 
+
                     <div class="mb-3">
+
                         <label class="form-label fw-bold">
                             Nombre
                         </label>
@@ -39,10 +41,14 @@ $proveedores = $proveedores ?? [];
                             type="text"
                             name="nombre"
                             class="form-control"
+                            placeholder="Ingrese nombre del repuesto"
                             required>
+
                     </div>
 
+
                     <div class="mb-3">
+
                         <label class="form-label fw-bold">
                             Marca
                         </label>
@@ -51,12 +57,17 @@ $proveedores = $proveedores ?? [];
                             type="text"
                             name="marca"
                             class="form-control"
+                            placeholder="Ingrese marca"
                             required>
+
                     </div>
+
 
                     <div class="row">
 
+
                         <div class="col-md-6 mb-3">
+
                             <label class="form-label fw-bold">
                                 Precio
                             </label>
@@ -67,10 +78,15 @@ $proveedores = $proveedores ?? [];
                                 min="0"
                                 name="precio"
                                 class="form-control"
+                                placeholder="0.00"
                                 required>
+
                         </div>
 
+
+
                         <div class="col-md-6 mb-3">
+
                             <label class="form-label fw-bold">
                                 Stock
                             </label>
@@ -80,37 +96,52 @@ $proveedores = $proveedores ?? [];
                                 min="0"
                                 name="stock"
                                 class="form-control"
+                                placeholder="Cantidad disponible"
                                 required>
+
                         </div>
+
 
                     </div>
 
+
+
                     <div class="mb-4">
+
                         <label class="form-label fw-bold">
                             Proveedor
                         </label>
+
 
                         <select
                             name="proveedor_id"
                             class="form-select"
                             required>
 
+
                             <option value="">
                                 Seleccione un proveedor...
                             </option>
 
+
                             <?php foreach ($proveedores as $p): ?>
 
                                 <option value="<?= $p["id_proveedor"] ?>">
-                                    <?= $p["nombre"] ?>
+                                    <?= $p["nombre_empresa"] ?>
                                 </option>
 
                             <?php endforeach; ?>
 
+
                         </select>
+
+
                     </div>
 
+
+
                     <div class="text-end">
+
 
                         <a
                             href="index.php?url=repuestos/listar"
@@ -119,6 +150,8 @@ $proveedores = $proveedores ?? [];
                             Cancelar
 
                         </a>
+
+
 
                         <button
                             type="submit"
@@ -130,15 +163,21 @@ $proveedores = $proveedores ?? [];
 
                         </button>
 
+
                     </div>
+
 
                 </form>
 
+
             </div>
+
 
         </div>
 
+
     </div>
+
 
 </body>
 
